@@ -4,24 +4,24 @@ select
   case
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changesecuritylistcompartment',
-  	   'com.oraclecloud.virtualnetwork.createsecuritylist',
-       'com.oraclecloud.virtualnetwork.deletesecuritylist',
-       'com.oraclecloud.virtualnetwork.updatesecuritylist']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then 'ok'
-	else 'alarm'
+  	  'com.oraclecloud.virtualnetwork.createsecuritylist',
+      'com.oraclecloud.virtualnetwork.deletesecuritylist',
+      'com.oraclecloud.virtualnetwork.updatesecuritylist']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then 'ok'
+	  else 'alarm'
   end as status,
   case
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changesecuritylistcompartment',
-  	   'com.oraclecloud.virtualnetwork.createsecuritylist',
-       'com.oraclecloud.virtualnetwork.deletesecuritylist',
-       'com.oraclecloud.virtualnetwork.updatesecuritylist']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then  t.title || ' Event Rule notifications configured for security list changes.'
-	else t.title || ' Event Rule notifications not configured for security list changes.'
+  	  'com.oraclecloud.virtualnetwork.createsecuritylist',
+      'com.oraclecloud.virtualnetwork.deletesecuritylist',
+      'com.oraclecloud.virtualnetwork.updatesecuritylist']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then  t.title || ' Event Rule notifications configured for security list changes.'
+	  else t.title || ' Event Rule notifications not configured for security list changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

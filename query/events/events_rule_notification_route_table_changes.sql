@@ -4,24 +4,24 @@ select
   case
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changeroutetablecompartment',
-       'com.oraclecloud.virtualnetwork.createroutetable',
-       'com.oraclecloud.virtualnetwork.deleteroutetable',
-       'com.oraclecloud.virtualnetwork.updateroutetable']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then 'ok'
-	else 'alarm'
+      'com.oraclecloud.virtualnetwork.createroutetable',
+      'com.oraclecloud.virtualnetwork.deleteroutetable',
+      'com.oraclecloud.virtualnetwork.updateroutetable']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then 'ok'
+	  else 'alarm'
   end as status,
   case
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changeroutetablecompartment',
-       'com.oraclecloud.virtualnetwork.createroutetable',
-       'com.oraclecloud.virtualnetwork.deleteroutetable',
-       'com.oraclecloud.virtualnetwork.updateroutetable']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then  t.title || ' Event Rule notifications configured for route table changes.'
-	else t.title || ' Event Rule notifications not configured for route table changes.'
+      'com.oraclecloud.virtualnetwork.createroutetable',
+      'com.oraclecloud.virtualnetwork.deleteroutetable',
+      'com.oraclecloud.virtualnetwork.updateroutetable']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then  t.title || ' Event Rule notifications configured for route table changes.'
+	  else t.title || ' Event Rule notifications not configured for route table changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

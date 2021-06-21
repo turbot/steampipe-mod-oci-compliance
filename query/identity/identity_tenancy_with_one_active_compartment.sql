@@ -8,7 +8,7 @@ where
   lifecycle_state = 'ACTIVE' and name <>  'ManagedCompartmentForPaaS'  group by tenant_id
 )
 select
-  --Required columns
+  -- Required columns
   a.tenant_id as resource,
   case
     when a.count > 1 then 'ok'

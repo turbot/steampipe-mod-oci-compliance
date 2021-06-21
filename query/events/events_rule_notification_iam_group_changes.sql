@@ -3,23 +3,23 @@ select
   distinct t.id as resource,
   case
     when condition -> 'eventType' ?& array
-		['com.oraclecloud.identitycontrolplane.creategroup',
-		'com.oraclecloud.identitycontrolplane.deletegroup',
-		'com.oraclecloud.identitycontrolplane.updategroup']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then 'ok'
-	else 'alarm'
+		  ['com.oraclecloud.identitycontrolplane.creategroup',
+		  'com.oraclecloud.identitycontrolplane.deletegroup',
+		  'com.oraclecloud.identitycontrolplane.updategroup']
+	    and a ->> 'actionType' = 'ONS'
+    	and t.lifecycle_state = 'ACTIVE'
+    	and t.is_enabled then 'ok'
+	  else 'alarm'
   end as status,
   case
     when condition -> 'eventType' ?& array
-		['com.oraclecloud.identitycontrolplane.creategroup',
-		'com.oraclecloud.identitycontrolplane.deletegroup',
-		'com.oraclecloud.identitycontrolplane.updategroup']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then  t.title || ' event rule notifications configured for IAM group changes.'
-	else t.title || ' event rule notifications not configured for IAM group changes.'
+      ['com.oraclecloud.identitycontrolplane.creategroup',
+      'com.oraclecloud.identitycontrolplane.deletegroup',
+      'com.oraclecloud.identitycontrolplane.updategroup']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then  t.title || ' event rule notifications configured for IAM group changes.'
+	  else t.title || ' event rule notifications not configured for IAM group changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

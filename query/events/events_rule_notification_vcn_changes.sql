@@ -6,20 +6,20 @@ select
       ['com.oraclecloud.virtualnetwork.createvcn',
       'com.oraclecloud.virtualnetwork.deletevcn',
       'com.oraclecloud.virtualnetwork.updatevcn']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then 'ok'
-	else 'alarm'
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then 'ok'
+	  else 'alarm'
   end as status,
   case
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.createvcn',
       'com.oraclecloud.virtualnetwork.deletevcn',
       'com.oraclecloud.virtualnetwork.updatevcn']
-	and a ->> 'actionType' = 'ONS'
-	and t.lifecycle_state = 'ACTIVE'
-	and t.is_enabled then  t.title || ' Event Rule notifications configured for VCN changes.'
-	else t.title || ' Event Rule notifications not configured for VCN changes.'
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then  t.title || ' Event Rule notifications configured for VCN changes.'
+	  else t.title || ' Event Rule notifications not configured for VCN changes.'
   end as reason,
   -- Additional Dimensions
   t.region,
