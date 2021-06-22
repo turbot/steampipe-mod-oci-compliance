@@ -2,7 +2,7 @@ select
   -- Required Columns
   distinct t.id as resource,
   case
-  	when c.name is not null then 'skip'
+    when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.identitycontrolplane.createpolicy',
       'com.oraclecloud.identitycontrolplane.deletepolicy',
