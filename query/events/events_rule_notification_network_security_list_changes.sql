@@ -22,7 +22,7 @@ select
       'com.oraclecloud.virtualnetwork.updatenetworksecuritygroup']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for network security group changes.'
+      and t.is_enabled then t.title || ' configured for network security group changes.'
     else t.title || ' not configured for network security group changes.'
   end as reason,
   -- Additional Dimensions

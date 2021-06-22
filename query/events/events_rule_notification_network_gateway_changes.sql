@@ -62,7 +62,7 @@ select
       'Service Gateway – Change Compartment']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || '	configured for network gateway changes.'
+      and t.is_enabled then t.title || ' configured for network gateway changes.'
     else t.title || ' not configured for network gateway changes.'
   end as reason,
   -- Additional Dimensions

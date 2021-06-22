@@ -1,5 +1,5 @@
 select
-  --Required Columns
+  -- Required Columns
   a.id as resource,
   case
     when email is null then 'alarm'
@@ -8,7 +8,7 @@ select
   end as status,
   case
     when email is null then a.name || ' not associated with email address.'
-    when not email_verified then a.name || ' associated email address not verified.'
+    when not email_verified then a.name || ' associated with unverified email address.'
     else a.name || ' associated with valid email address.'
   end as reason,
   -- Additional Dimensions

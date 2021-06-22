@@ -10,7 +10,7 @@ select
       'com.oraclecloud.virtualnetwork.updatesecuritylist']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-	    and t.is_enabled then 'ok'
+      and t.is_enabled then 'ok'
     else 'alarm'
   end as status,
   case
@@ -22,7 +22,7 @@ select
       'com.oraclecloud.virtualnetwork.updatesecuritylist']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for security list changes.'
+      and t.is_enabled then t.title || ' configured for security list changes.'
     else t.title || ' not configured for security list changes.'
   end as reason,
   -- Additional Dimensions

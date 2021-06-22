@@ -20,7 +20,7 @@ select
       'com.oraclecloud.identitycontrolplane.updatepolicy']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for IdP group mapping changes.'
+      and t.is_enabled then t.title || ' configured for IdP group mapping changes.'
     else t.title || ' not configured for IdP group mapping changes.'
   end as reason,
   -- Additional Dimensions

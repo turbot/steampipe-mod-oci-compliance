@@ -24,7 +24,7 @@ select
       'com.oraclecloud.identitycontrolplane.updateuserstate']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for IAM user changes.'
+      and t.is_enabled then t.title || ' configured for IAM user changes.'
     else t.title || ' not configured for IAM user changes.'
   end as reason,
   -- Additional Dimensions

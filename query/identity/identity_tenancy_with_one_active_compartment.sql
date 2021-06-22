@@ -16,7 +16,7 @@ select
     else 'alarm'
   end as status,
   case
-    when a.count > 1 then (a.count) || ' compartments exist in tenancy.'
+    when a.count > 1 then a.count || ' compartments exist in tenancy.'
     else 'No additional compartments exist in tenancy.'
   end as reason,
   -- Additional Dimensions

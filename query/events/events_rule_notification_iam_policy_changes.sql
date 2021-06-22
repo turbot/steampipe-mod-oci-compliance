@@ -20,7 +20,7 @@ select
       'com.oraclecloud.identitycontrolplane.updatepolicy']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for IAM policy changes.'
+      and t.is_enabled then t.title || ' configured for IAM policy changes.'
     else t.title || ' not configured for IAM policy changes.'
   end as reason,
   -- Additional Dimensions

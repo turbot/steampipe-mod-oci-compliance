@@ -20,7 +20,7 @@ select
       'com.oraclecloud.identitycontrolplane.updategroup']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for IAM group changes.'
+      and t.is_enabled then t.title || ' configured for IAM group changes.'
     else t.title || ' not configured for IAM group changes.'
   end as reason,
   -- Additional Dimensions

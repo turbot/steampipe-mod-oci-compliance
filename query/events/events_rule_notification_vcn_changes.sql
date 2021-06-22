@@ -20,7 +20,7 @@ select
       'com.oraclecloud.virtualnetwork.updatevcn']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' configured for VCN changes.'
+      and t.is_enabled then t.title || ' configured for VCN changes.'
     else t.title || ' not configured for VCN changes.'
   end as reason,
   -- Additional Dimensions

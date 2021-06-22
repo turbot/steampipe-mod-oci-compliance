@@ -20,8 +20,8 @@ select
       'com.oraclecloud.identitycontrolplane.updateidentityprovider']
     	and a ->> 'actionType' = 'ONS'
     	and t.lifecycle_state = 'ACTIVE'
-    	and t.is_enabled then  t.title || ' configured for Identity Provider changes.'
-    else t.title || ' not configured for Identity Provider changes.'
+    	and t.is_enabled then t.title || ' configured for identity provider changes.'
+    else t.title || ' not configured for identity provider changes.'
   end as reason,
   -- Additional Dimensions
   t.region,
