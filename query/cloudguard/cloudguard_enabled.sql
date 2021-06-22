@@ -6,8 +6,8 @@ select
     else 'alarm'
   end as status,
   case
-    when status = 'ENABLED' then 'Cloud Guard enabled.'
-    else 'Cloud Guard disabled.'
+    when status = 'ENABLED' then 'CloudGuard enabled.'
+    else 'CloudGuard disabled.'
   end as reason,
   -- Additional Dimensions
   reporting_region,

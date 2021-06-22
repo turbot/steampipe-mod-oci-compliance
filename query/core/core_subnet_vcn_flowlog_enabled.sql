@@ -1,12 +1,12 @@
 with subnets_with_flowlog as (
-select
-  configuration -> 'source' ->> 'resource' as subnet_id,
-  lifecycle_state
-from
-  oci_logging_log
-where
-  configuration -> 'source' ->> 'service' = 'flowlogs'
-  and lifecycle_state = 'ACTIVE'
+  select
+    configuration -> 'source' ->> 'resource' as subnet_id,
+    lifecycle_state
+  from
+    oci_logging_log
+  where
+    configuration -> 'source' ->> 'service' = 'flowlogs'
+    and lifecycle_state = 'ACTIVE'
 )
 select
   -- Required Columns

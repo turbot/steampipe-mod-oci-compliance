@@ -16,8 +16,8 @@ select
     else 'ok'
   end as status,
   case
-    when p.count > 0 then a.display_name || ' of ' || b.display_name || ' with non-icmp ports configured.'
-    else a.display_name || ' of' || b.display_name || ' only icmp ports configured.'
+    when p.count > 0 then a.display_name || ' configured with non ICMP ports.'
+    else a.display_name || ' configured with ICMP ports only.'
   end as reason,
   -- Additional Dimensions
   a.region

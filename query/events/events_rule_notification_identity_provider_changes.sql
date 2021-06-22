@@ -2,6 +2,7 @@ select
   -- Required Columns
   distinct t.id as resource,
   case
+    when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.identitycontrolplane.createidentityprovider',
       'com.oraclecloud.identitycontrolplane.deleteidentityprovider',
@@ -9,17 +10,18 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then 'ok'
-		else 'alarm'
+	  else 'alarm'
   end as status,
   case
+    when c.name is not null then c.name || ' not a root compartment.'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.identitycontrolplane.createidentityprovider',
       'com.oraclecloud.identitycontrolplane.deleteidentityprovider',
       'com.oraclecloud.identitycontrolplane.updateidentityprovider']
-      and a ->> 'actionType' = 'ONS'
-      and t.lifecycle_state = 'ACTIVE'
-      and t.is_enabled then  t.title || ' event rule notifications configured for Identity Provider changes.'
-		else t.title || ' event rule notifications not configured Identity Provider changes.'
+    	and a ->> 'actionType' = 'ONS'
+    	and t.lifecycle_state = 'ACTIVE'
+    	and t.is_enabled then  t.title || ' configured for Identity Provider changes.'
+	  else t.title || ' not configured for Identity Provider changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

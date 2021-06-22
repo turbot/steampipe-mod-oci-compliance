@@ -12,8 +12,7 @@ benchmark "cis_v110_1" {
     control.cis_v110_1_7,
     control.cis_v110_1_9,
     control.cis_v110_1_10,
-    control.cis_v110_1_12
-
+    control.cis_v110_1_12,
   ]
   tags          = local.cis_v110_1_common_tags
 }

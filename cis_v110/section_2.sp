@@ -72,7 +72,7 @@ control "cis_v110_2_4" {
 control "cis_v110_2_5" {
   title         = "2.5 Ensure the default security list of every VCN restricts all traffic except ICMP"
   description   = "A default security list is created when a Virtual Cloud Network (VCN) is created. Security lists provide stateful filtering of ingress and egress network traffic to OCI resources. It is recommended no security list allows unrestricted ingress access to Secure Shell (SSH) via port 22."
-  sql           = query.core_default_security_group_remote_administration.sql
+  sql           = query.core_default_security_group_allow_icmp_only.sql
   #documentation = file("./cis_v110/docs/cis_v110_2_5.md")
 
   tags = merge(local.cis_v110_2_common_tags, {

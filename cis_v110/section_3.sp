@@ -9,6 +9,7 @@ benchmark "cis_v110_3" {
   #documentation = file("./cis_v110/docs/cis_v110_3.md")
   children = [
     control.cis_v110_3_1,
+    control.cis_v110_3_3,
     control.cis_v110_3_4,
     control.cis_v110_3_5,
     control.cis_v110_3_6,
@@ -36,6 +37,19 @@ control "cis_v110_3_1" {
     cis_item_id = "3.1"
     cis_level   = "1"
     cis_type    = "automated"
+  })
+}
+
+control "cis_v110_3_3" {
+  title         = "3.3 Create at least one notification topic and subscription to receive monitoring alerts"
+  description   = "Notifications provide a multi-channel messaging service that allow users and applications to be notified of events of interest occurring within OCI. Messages can be sent via eMail, HTTPs, PagerDuty, Slack or the OCI Function service. Some channels, such as eMail require confirmation of the subscription before it becomes active."
+  sql           = query.audit_log_retention_period_365_days.sql
+  #documentation = file("./cis_v110/docs/cis_v110_3_3.md")
+
+  tags = merge(local.cis_v110_3_common_tags, {
+    cis_item_id = "3.3"
+    cis_level   = "1"
+    cis_type    = "manual"
   })
 }
 

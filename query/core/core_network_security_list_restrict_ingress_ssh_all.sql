@@ -5,20 +5,20 @@ with non_compliant_rules as (
   from
     oci_core_network_security_group,
     jsonb_array_elements(rules) as r
-where
-  r ->> 'direction' = 'INGRESS'
-  and r ->> 'sourceType' = 'CIDR_BLOCK'
-  and r ->> 'source' = '0.0.0.0/0'
-  and (
-    (
-      r ->> 'protocol' = 'all'
+  where
+    r ->> 'direction' = 'INGRESS'
+    and r ->> 'sourceType' = 'CIDR_BLOCK'
+    and r ->> 'source' = '0.0.0.0/0'
+    and (
+      (
+        r ->> 'protocol' = 'all'
+      )
+      or (
+        (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 22
+        and (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 22
+      )
     )
-    or (
-      (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 22
-      and (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 22
-    )
-  )
-  group by id
+    group by id
 )
 select
   -- Required Columns
