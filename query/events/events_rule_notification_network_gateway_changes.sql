@@ -2,7 +2,7 @@ select
   -- Required Columns
   distinct t.id as resource,
   case
-  	when c.name is not null then 'skip'
+    when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['DRG – Delete',
       'DRG – Update',
@@ -35,9 +35,9 @@ select
   end as status,
   case
     when c.name is not null then c.name || ' not a root compartment.'
-   	when condition -> 'eventType' ?& array
+    when condition -> 'eventType' ?& array
       ['DRG – Delete',
-			'DRG – Update',
+      'DRG – Update',
       'DRG Attachment – Create',
       'DRG Attachment – Delete',
       'DRG Attachment – Update',
@@ -62,8 +62,8 @@ select
       'Service Gateway – Change Compartment']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-     	and t.is_enabled then  t.title || '	configured for network gateway changes.'
-  	else t.title || ' not configured for network gateway changes.'
+      and t.is_enabled then  t.title || '	configured for network gateway changes.'
+    else t.title || ' not configured for network gateway changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

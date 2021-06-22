@@ -5,7 +5,7 @@ select
     when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changesecuritylistcompartment',
-  	  'com.oraclecloud.virtualnetwork.createsecuritylist',
+      'com.oraclecloud.virtualnetwork.createsecuritylist',
       'com.oraclecloud.virtualnetwork.deletesecuritylist',
       'com.oraclecloud.virtualnetwork.updatesecuritylist']
       and a ->> 'actionType' = 'ONS'
@@ -17,7 +17,7 @@ select
     when c.name is not null then c.name || ' not a root compartment.'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changesecuritylistcompartment',
-  	  'com.oraclecloud.virtualnetwork.createsecuritylist',
+      'com.oraclecloud.virtualnetwork.createsecuritylist',
       'com.oraclecloud.virtualnetwork.deletesecuritylist',
       'com.oraclecloud.virtualnetwork.updatesecuritylist']
       and a ->> 'actionType' = 'ONS'
