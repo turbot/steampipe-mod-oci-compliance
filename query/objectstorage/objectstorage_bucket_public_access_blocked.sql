@@ -3,11 +3,11 @@ select
   a.id as resource,
   a.public_access_type,
   case
-    when public_access_type LIKE 'Object%' then 'alarm'
+    when public_access_type like 'Object%' then 'alarm'
     else 'ok'
   end as status,
   case
-    when public_access_type LIKE 'Object%' then a.title || ' publicly accessible.'
+    when public_access_type like 'Object%' then a.title || ' publicly accessible.'
     else a.title || ' not publicly accessible.'
   end as reason,
   -- Additional Dimensions

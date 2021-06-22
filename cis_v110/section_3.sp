@@ -37,19 +37,21 @@ control "cis_v110_3_1" {
     cis_item_id = "3.1"
     cis_level   = "1"
     cis_type    = "automated"
+    service     = "audit"
   })
 }
 
 control "cis_v110_3_3" {
   title         = "3.3 Create at least one notification topic and subscription to receive monitoring alerts"
   description   = "Notifications provide a multi-channel messaging service that allow users and applications to be notified of events of interest occurring within OCI. Messages can be sent via eMail, HTTPs, PagerDuty, Slack or the OCI Function service. Some channels, such as eMail require confirmation of the subscription before it becomes active."
-  sql           = query.audit_log_retention_period_365_days.sql
+  sql           = query.notification_topic_with_subscription.sql
   #documentation = file("./cis_v110/docs/cis_v110_3_3.md")
 
   tags = merge(local.cis_v110_3_common_tags, {
     cis_item_id = "3.3"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -63,6 +65,7 @@ control "cis_v110_3_4" {
     cis_item_id = "3.4"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -76,6 +79,7 @@ control "cis_v110_3_5" {
     cis_item_id = "3.5"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -89,6 +93,7 @@ control "cis_v110_3_6" {
     cis_item_id = "3.6"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -102,6 +107,7 @@ control "cis_v110_3_7" {
     cis_item_id = "3.7"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -115,6 +121,7 @@ control "cis_v110_3_8" {
     cis_item_id = "3.8"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -128,6 +135,7 @@ control "cis_v110_3_9" {
     cis_item_id = "3.9"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -141,6 +149,7 @@ control "cis_v110_3_10" {
     cis_item_id = "3.10"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -154,6 +163,7 @@ control "cis_v110_3_11" {
     cis_item_id = "3.11"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -167,6 +177,7 @@ control "cis_v110_3_12" {
     cis_item_id = "3.12"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -180,19 +191,21 @@ control "cis_v110_3_13" {
     cis_item_id = "3.13"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
 control "cis_v110_3_14" {
   title         = "3.14 Ensure VCN flow logging is enabled for all subnets"
   description   = "VCN flow logs record details about traffic that has been accepted or rejected based on the security list rule."
-  sql           = query.core_subnet_vcn_flowlog_enabled.sql
+  sql           = query.core_subnet_flowlog_enabled.sql
   #documentation = file("./cis_v110/docs/cis_v110_3_14.md")
 
   tags = merge(local.cis_v110_3_common_tags, {
     cis_item_id = "3.14"
     cis_level   = "2"
     cis_type    = "manual"
+    service     = "ons"
   })
 }
 
@@ -206,6 +219,7 @@ control "cis_v110_3_15" {
     cis_item_id = "3.15"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "cloudguard"
   })
 }
 
@@ -219,5 +233,6 @@ control "cis_v110_3_17" {
     cis_item_id = "3.17"
     cis_level   = "2"
     cis_type    = "manual"
+    service     = "logging"
   })
 }

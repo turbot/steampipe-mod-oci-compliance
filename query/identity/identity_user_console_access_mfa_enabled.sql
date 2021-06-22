@@ -7,7 +7,7 @@ select
   end as status,
   case
     when not can_use_console_password then a.name || ' password login disabled.'
-    when can_use_console_password and is_mfa_activated then a.name || ' password login enabled and MFA device configured.'
+    when is_mfa_activated then a.name || ' password login enabled and MFA device configured.'
     else a.name || ' password login enabled but no MFA device configured.'
   end as reason,
   -- Additional Dimensions

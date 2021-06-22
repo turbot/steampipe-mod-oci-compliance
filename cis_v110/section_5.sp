@@ -24,6 +24,7 @@ control "cis_v110_5_1" {
     cis_item_id = "5.1"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "identity"
   })
 }
 
@@ -37,5 +38,6 @@ control "cis_v110_5_2" {
     cis_item_id = "5.2"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "identity"
   })
 }

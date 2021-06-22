@@ -23,5 +23,6 @@ control "cis_v110_4_1" {
     cis_item_id = "4.1"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "objectstorage"
   })
 }

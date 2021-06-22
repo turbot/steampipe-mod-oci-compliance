@@ -10,10 +10,10 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then 'ok'
-  	else 'alarm'
+    else 'alarm'
   end as status,
   case
-  	when c.name is not null then c.name || ' not a root compartment.'
+    when c.name is not null then c.name || ' not a root compartment.'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.identitycontrolplane.creategroup',
       'com.oraclecloud.identitycontrolplane.deletegroup',
@@ -21,7 +21,7 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then  t.title || ' configured for IAM group changes.'
-	  else t.title || ' not configured for IAM group changes.'
+    else t.title || ' not configured for IAM group changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

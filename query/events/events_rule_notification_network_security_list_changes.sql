@@ -5,25 +5,25 @@ select
     when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changenetworksecuritygroupcompartment',
-	    'com.oraclecloud.virtualnetwork.createnetworksecuritygroup',
-	    'com.oraclecloud.virtualnetwork.deletenetworksecuritygroup',
-	    'com.oraclecloud.virtualnetwork.updatenetworksecuritygroup']
+      'com.oraclecloud.virtualnetwork.createnetworksecuritygroup',
+      'com.oraclecloud.virtualnetwork.deletenetworksecuritygroup',
+      'com.oraclecloud.virtualnetwork.updatenetworksecuritygroup']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then 'ok'
-  	else 'alarm'
+    else 'alarm'
   end as status,
   case
     when c.name is not null then c.name || ' not a root compartment.'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changenetworksecuritygroupcompartment',
-	    'com.oraclecloud.virtualnetwork.createnetworksecuritygroup',
-	    'com.oraclecloud.virtualnetwork.deletenetworksecuritygroup',
-	    'com.oraclecloud.virtualnetwork.updatenetworksecuritygroup']
-	    and a ->> 'actionType' = 'ONS'
-	    and t.lifecycle_state = 'ACTIVE'
-	    and t.is_enabled then  t.title || ' configured for network security group changes.'
-  	else t.title || ' not configured for network security group changes.'
+      'com.oraclecloud.virtualnetwork.createnetworksecuritygroup',
+      'com.oraclecloud.virtualnetwork.deletenetworksecuritygroup',
+      'com.oraclecloud.virtualnetwork.updatenetworksecuritygroup']
+      and a ->> 'actionType' = 'ONS'
+      and t.lifecycle_state = 'ACTIVE'
+      and t.is_enabled then  t.title || ' configured for network security group changes.'
+    else t.title || ' not configured for network security group changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

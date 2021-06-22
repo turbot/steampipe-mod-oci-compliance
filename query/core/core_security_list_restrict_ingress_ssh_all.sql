@@ -8,14 +8,14 @@ with non_compliant_rules as (
   where
     p ->> 'source' = '0.0.0.0/0'
     and (
-    (
-      p ->> 'protocol' = 'all'
-      and (p -> 'tcpOptions' -> 'destinationPortRange' -> 'min') is null
-    )
-    or (
-      p ->> 'protocol' = '6' and
-      (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 22
-      and (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 22
+      (
+        p ->> 'protocol' = 'all'
+        and (p -> 'tcpOptions' -> 'destinationPortRange' -> 'min') is null
+      )
+      or (
+        p ->> 'protocol' = '6' and
+        (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 22
+        and (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 22
       )
     )
   group by id
@@ -28,8 +28,8 @@ select
     else 'alarm'
   end as status,
   case
-    when non_compliant_rules.id is null then osl.display_name || ' ingress restricted for ssh from 0.0.0.0/0.'
-    else osl.display_name || ' rule(s) allows ssh from 0.0.0.0/0.'
+    when non_compliant_rules.id is null then osl.display_name || ' ingress restricted for SSH from 0.0.0.0/0.'
+    else osl.display_name || ' contains '|| non_compliant_rules.num_noncompliant_rules || ' ingress rule(s) allowing SSH from 0.0.0.0/0.'
   end as reason,
   -- Additional Dimensions
   region,

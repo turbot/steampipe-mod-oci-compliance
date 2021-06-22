@@ -10,15 +10,13 @@ with non_compliant_rules as (
     and r ->> 'sourceType' = 'CIDR_BLOCK'
     and r ->> 'source' = '0.0.0.0/0'
     and (
-      (
-        r ->> 'protocol' = 'all'
-      )
+      r ->> 'protocol' = 'all'
       or (
         (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 22
         and (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 22
       )
     )
-    group by id
+  group by id
 )
 select
   -- Required Columns
@@ -28,8 +26,8 @@ select
     else 'alarm'
   end as status,
   case
-    when non_compliant_rules.id is null then nsg.display_name || ' ingress to port 22 restricted from 0.0.0.0/0.'
-    else nsg.display_name || ' ingress to port 22 not restricted from 0.0.0.0/0.'
+    when non_compliant_rules.id is null then nsg.display_name || ' ingress restricted for SSH from 0.0.0.0/0.'
+    else nsg.display_name || ' contains ' || non_compliant_rules.num_noncompliant_rules || ' ingress rule(s) allowing SSH from 0.0.0.0/0.'
   end as reason,
   -- Additional Dimensions
   region,

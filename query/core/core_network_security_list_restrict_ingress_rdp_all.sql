@@ -5,20 +5,18 @@ with non_compliant_rules as (
   from
     oci_core_network_security_group,
     jsonb_array_elements(rules) as r
-where
-  r ->> 'direction' = 'INGRESS'
-  and r ->> 'sourceType' = 'CIDR_BLOCK'
-  and r ->> 'source' = '0.0.0.0/0'
-  and (
-    (
+  where
+    r ->> 'direction' = 'INGRESS'
+    and r ->> 'sourceType' = 'CIDR_BLOCK'
+    and r ->> 'source' = '0.0.0.0/0'
+    and (
       r ->> 'protocol' = 'all'
+      or (
+        (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 3389
+        and (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 3389
+      )
     )
-    or (
-      (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 3389
-      and (r -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 3389
-    )
-  )
-  group by id
+    group by id
 )
 select
   -- Required Columns
@@ -28,8 +26,8 @@ select
     else 'alarm'
   end as status,
   case
-    when non_compliant_rules.id is null then nsg.display_name || ' ingress to port 3389 restricted from 0.0.0.0/0.'
-    else nsg.display_name || ' ingress to port 3389 not restricted from 0.0.0.0/0.'
+    when non_compliant_rules.id is null then nsg.display_name || ' ingress restricted for port 3389 from 0.0.0.0/0.'
+    else nsg.display_name || ' contains ' || non_compliant_rules.num_noncompliant_rules || ' ingress rule(s) allowing port 3389 from 0.0.0.0/0.'
   end as reason,
   -- Additional Dimensions
   region,

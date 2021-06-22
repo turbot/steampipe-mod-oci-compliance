@@ -8,15 +8,15 @@ with non_compliant_rules as (
   where
     p ->> 'source' = '0.0.0.0/0'
     and (
-    (
-      p ->> 'protocol' = 'all'
-      and (p -> 'tcpOptions' -> 'destinationPortRange' -> 'min') is null
-    )
-    or (
-      p ->> 'protocol' = '6' and
-      (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 3389
-      and (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 3389
-    )
+      (
+        p ->> 'protocol' = 'all'
+        and (p -> 'tcpOptions' -> 'destinationPortRange' -> 'min') is null
+      )
+      or (
+        p ->> 'protocol' = '6' and
+        (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'min')::integer <= 3389
+        and (p -> 'tcpOptions' -> 'destinationPortRange' ->> 'max')::integer >= 3389
+      )
     )
   group by id
 )
@@ -29,7 +29,7 @@ select
   end as status,
   case
     when non_compliant_rules.id is null then osl.display_name || ' ingress to port 3389 restricted from 0.0.0.0/0.'
-    else osl.display_name || ' ingress to port 3389 not restricted from 0.0.0.0/0.'
+    else osl.display_name || ' contains ' || non_compliant_rules.num_noncompliant_rules || ' ingress rule(s) allowing port 3389 from 0.0.0.0/0.'
   end as reason,
   -- Additional Dimensions
   region,

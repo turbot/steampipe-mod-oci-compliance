@@ -1,5 +1,6 @@
 locals {
   cis_v110_common_tags = {
+    cis         = "true"
     benchmark   = "cis"
     cis_version = "v1.1.0"
     plugin      = "oci"

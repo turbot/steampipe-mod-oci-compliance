@@ -16,8 +16,8 @@ select
     else 'ok'
   end as status,
   case
-    when a.subnet_id is null then s.title || ' VCN flow logging disabled.'
-    else s.title || ' VCN flow logging enabled.'
+    when a.subnet_id is null then s.title || ' flow logging disabled.'
+    else s.title || ' flow logging enabled.'
   end as reason,
   -- Additional Dimensions
   s.region,

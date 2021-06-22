@@ -10,7 +10,7 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then 'ok'
-	  else 'alarm'
+    else 'alarm'
   end as status,
   case
     when c.name is not null then c.name || ' not a root compartment.'
@@ -21,7 +21,7 @@ select
     	and a ->> 'actionType' = 'ONS'
     	and t.lifecycle_state = 'ACTIVE'
     	and t.is_enabled then  t.title || ' configured for Identity Provider changes.'
-	  else t.title || ' not configured for Identity Provider changes.'
+    else t.title || ' not configured for Identity Provider changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

@@ -2,7 +2,7 @@ select
   -- Required Columns
   distinct t.id as resource,
   case
-  	when c.name is not null then 'skip'
+    when c.name is not null then 'skip'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changeroutetablecompartment',
       'com.oraclecloud.virtualnetwork.createroutetable',
@@ -11,10 +11,10 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then 'ok'
-	  else 'alarm'
+    else 'alarm'
   end as status,
-  case
-  	when c.name is not null then c.name || ' not a root compartment.'
+ case
+    when c.name is not null then c.name || ' not a root compartment.'
     when condition -> 'eventType' ?& array
       ['com.oraclecloud.virtualnetwork.changeroutetablecompartment',
       'com.oraclecloud.virtualnetwork.createroutetable',
@@ -23,7 +23,7 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then  t.title || ' configured for route tables changes.'
-	  else t.title || ' not configured for route tables changes.'
+    else t.title || ' not configured for route tables changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

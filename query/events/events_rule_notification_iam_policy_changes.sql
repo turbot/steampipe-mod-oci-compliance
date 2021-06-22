@@ -9,8 +9,8 @@ select
       'com.oraclecloud.identitycontrolplane.updatepolicy']
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
-	    and t.is_enabled then 'ok'
-	  else 'alarm'
+      and t.is_enabled then 'ok'
+    else 'alarm'
   end as status,
   case
     when c.name is not null then c.name || ' not a root compartment.'
@@ -21,7 +21,7 @@ select
       and a ->> 'actionType' = 'ONS'
       and t.lifecycle_state = 'ACTIVE'
       and t.is_enabled then  t.title || ' configured for IAM policy changes.'
-  	else t.title || ' not configured for IAM policy changes.'
+    else t.title || ' not configured for IAM policy changes.'
   end as reason,
   -- Additional Dimensions
   t.region,

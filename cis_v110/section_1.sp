@@ -20,13 +20,14 @@ benchmark "cis_v110_1" {
 control "cis_v110_1_4" {
   title         = "1.4 Ensure IAM password policy requires minimum length of 14 or greater"
   description   = "Password policies are used to enforce password complexity requirements. IAM password policies can be used to ensure password are at least a certain length and are composed of certain characters. It is recommended the password policy require a minimum password length 14 characters and contain 1 non-alphabetic character (Number or 'Special Character')."
-  sql           = query.identity_authentication_password_policy_min_length_14.sql
+  sql           = query.identity_authentication_password_policy_strong_min_length_14.sql
   #documentation = file("./cis_v110/docs/cis_v110_1_4.md")
 
   tags = merge(local.cis_v110_1_common_tags, {
     cis_item_id = "1.4"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "identity"
   })
 }
 
@@ -40,6 +41,7 @@ control "cis_v110_1_7" {
     cis_item_id = "1.7"
     cis_level   = "1"
     cis_type    = "automated"
+    service     = "identity"
   })
 }
 
@@ -53,6 +55,7 @@ control "cis_v110_1_9" {
     cis_item_id = "1.9"
     cis_level   = "1"
     cis_type    = "automated"
+    service     = "identity"
   })
 }
 
@@ -66,6 +69,7 @@ control "cis_v110_1_10" {
     cis_item_id = "1.10"
     cis_level   = "1"
     cis_type    = "automated"
+    service     = "identity"
   })
 }
 
@@ -79,5 +83,6 @@ control "cis_v110_1_12" {
     cis_item_id = "1.12"
     cis_level   = "1"
     cis_type    = "manual"
+    service     = "identity"
   })
 }
