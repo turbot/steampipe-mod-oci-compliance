@@ -9,6 +9,7 @@ benchmark "cis_v110_3" {
   #documentation = file("./cis_v110/docs/cis_v110_3.md")
   children = [
     control.cis_v110_3_1,
+    control.cis_v110_3_2,
     control.cis_v110_3_3,
     control.cis_v110_3_4,
     control.cis_v110_3_5,
@@ -38,6 +39,20 @@ control "cis_v110_3_1" {
     cis_level   = "1"
     cis_type    = "automated"
     service     = "audit"
+  })
+}
+
+control "cis_v110_3_2" {
+  title         = "3.2 Ensure default tags are used on resources"
+  description   = "Using default tags is a way to ensure all resources that support tags are tagged during creation. Tags can be based on static values or based on computed values. It is recommended to setup default tags early on to ensure all created resources will get tagged. Tags are scoped to Compartments and are inherited by Child Compartments. The recommendation is to create default tags like “CreatedBy” at the Root Compartment level to ensure all resources get tagged."
+  sql           = query.identity_default_tag.sql
+  #documentation = file("./cis_v110/docs/cis_v110_3_2.md")
+
+  tags = merge(local.cis_v110_3_common_tags, {
+    cis_item_id = "3.2"
+    cis_level   = "1"
+    cis_type    = "manual"
+    service     = "identity"
   })
 }
 

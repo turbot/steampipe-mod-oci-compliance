@@ -10,6 +10,7 @@ benchmark "cis_v110_1" {
   children = [
     control.cis_v110_1_4,
     control.cis_v110_1_7,
+    control.cis_v110_1_8,
     control.cis_v110_1_9,
     control.cis_v110_1_10,
     control.cis_v110_1_12,
@@ -39,6 +40,20 @@ control "cis_v110_1_7" {
 
   tags = merge(local.cis_v110_1_common_tags, {
     cis_item_id = "1.7"
+    cis_level   = "1"
+    cis_type    = "automated"
+    service     = "identity"
+  })
+}
+
+control "cis_v110_1_8" {
+  title         = "1.8 Ensure user API keys rotate within 90 days or less"
+  description   = "API keys are used by administrators, developers, services and scripts for accessing OCI APIs directly or via SDKs/OCI CLI to search, create, update or delete OCI resources. The API key is an RSA key pair. The private key is used for signing the API requests and the public key is associated with a local or synchronized user's profile."
+  sql           = query.identity_user_api_key_age_90.sql
+  #documentation = file("./cis_v110/docs/cis_v110_1_8.md")
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    cis_item_id = "1.8"
     cis_level   = "1"
     cis_type    = "automated"
     service     = "identity"
