@@ -213,14 +213,14 @@ control "cis_v110_3_13" {
 control "cis_v110_3_14" {
   title         = "3.14 Ensure VCN flow logging is enabled for all subnets"
   description   = "VCN flow logs record details about traffic that has been accepted or rejected based on the security list rule."
-  sql           = query.core_subnet_flowlog_enabled.sql
+  sql           = query.core_subnet_flow_log_enabled.sql
   documentation = file("./cis_v110/docs/cis_v110_3_14.md")
 
   tags = merge(local.cis_v110_3_common_tags, {
     cis_item_id = "3.14"
     cis_level   = "2"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "core"
   })
 }
 
