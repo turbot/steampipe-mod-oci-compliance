@@ -1,6 +1,6 @@
 # Oracle Cloud Compliance Scanning Tool
 
-50+ checks covering industry defined security best practices across all Oracle Cloud regions.
+30+ checks covering industry defined security best practices across all Oracle Cloud regions.
 
 **Includes full support for v1.1.0 CIS benchmarks:**
 
