@@ -8,6 +8,7 @@ benchmark "cis_v110_1" {
   title         = "1 Identity and Access Management"
   documentation = file("./cis_v110/docs/cis_v110_1.md")
   children = [
+    control.cis_v110_1_1,
     control.cis_v110_1_4,
     control.cis_v110_1_7,
     control.cis_v110_1_8,
@@ -16,6 +17,20 @@ benchmark "cis_v110_1" {
     control.cis_v110_1_12,
   ]
   tags          = local.cis_v110_1_common_tags
+}
+
+control "cis_v110_1_1" {
+  title         = "1.1 Ensure service level admins are created to manage resources of particular service"
+  description   = "To apply least-privilege security principle, one can create service-level administrators in corresponding groups and assigning specific users to each service-level administrative group in a tenancy. This limits administrative access in a tenancy."
+  sql           = query.manual_control.sql
+  documentation = file("./cis_v110/docs/cis_v110_1_1.md")
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    cis_item_id = "1.1"
+    cis_level   = "1"
+    cis_type    = "manual"
+    service     = "identity"
+  })
 }
 
 control "cis_v110_1_4" {
