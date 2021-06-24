@@ -8,8 +8,8 @@ mod "oci_compliance" {
   categories    = ["oci", "cis", "compliance", "public cloud", "security"]
 
   opengraph {
-    title        = "Steampipe Mod for Oracle Cloud Infrastructure Compliance"
-    description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for CIS across all of your Oracle Cloud Infrastructure accounts using Steampipe."
-    image        = "/images/mods/turbot/oci-compliance-social-graphic.png"
+    title       = "Steampipe Mod for Oracle Cloud Infrastructure Compliance"
+    description = "Run individual configuration, compliance and security controls or full compliance benchmarks for CIS across all of your Oracle Cloud Infrastructure accounts using Steampipe."
+    image       = "/images/mods/turbot/oci-compliance-social-graphic.png"
   }
 }
