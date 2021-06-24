@@ -1,7 +1,6 @@
 select
   -- Required Columns
   a.id as resource,
-  a.public_access_type,
   case
     when public_access_type like 'Object%' then 'alarm'
     else 'ok'
