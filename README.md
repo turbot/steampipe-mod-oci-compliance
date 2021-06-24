@@ -4,7 +4,7 @@
 
 **Includes full support for v1.1.0 CIS benchmarks:**
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci_cis_v110_console.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci-compliance-mod-console.png)
 
 Includes support for:
 * [Oracle Cloud CIS v1.1.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v110)
