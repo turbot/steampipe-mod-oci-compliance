@@ -23,6 +23,7 @@ benchmark "cis_v110_3" {
     control.cis_v110_3_13,
     control.cis_v110_3_14,
     control.cis_v110_3_15,
+    control.cis_v110_3_16,
     control.cis_v110_3_17,
   ]
   tags          = local.cis_v110_3_common_tags
@@ -235,6 +236,20 @@ control "cis_v110_3_15" {
     cis_level   = "1"
     cis_type    = "manual"
     service     = "cloudguard"
+  })
+}
+
+control "cis_v110_3_16" {
+  title         = "3.16 Ensure customer created Customer Managed Key (CMK) is rotated at least annually"
+  description   = "Oracle Cloud Infrastructure Vault securely stores master encryption keys that protect your your encrypted data. You can use the Vault service to rotate keys to generate new cryptographic material. Periodically rotating keys limits the amount of data encrypted by one key version."
+  sql           = query.kms_cmk_rotation_365.sql
+  documentation = file("./cis_v110/docs/cis_v110_3_16.md")
+
+  tags = merge(local.cis_v110_3_common_tags, {
+    cis_item_id = "3.16"
+    cis_level   = "1"
+    cis_type    = "manual"
+    service     = "kms"
   })
 }
 

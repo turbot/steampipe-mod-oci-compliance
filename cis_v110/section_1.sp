@@ -14,6 +14,7 @@ benchmark "cis_v110_1" {
     control.cis_v110_1_8,
     control.cis_v110_1_9,
     control.cis_v110_1_10,
+    control.cis_v110_1_11,
     control.cis_v110_1_12,
   ]
   tags          = local.cis_v110_1_common_tags
@@ -97,6 +98,20 @@ control "cis_v110_1_10" {
 
   tags = merge(local.cis_v110_1_common_tags, {
     cis_item_id = "1.10"
+    cis_level   = "1"
+    cis_type    = "automated"
+    service     = "identity"
+  })
+}
+
+control "cis_v110_1_11" {
+  title         = "1.11 Ensure API keys are not created for tenancy administrator users"
+  description   = "Tenancy administrator users have full access to the organization's OCI tenancy. API keys associated with user accounts are used for invoking the OCI APIs via custom programs or clients like CLI/SDKs."
+  sql           = query.identity_administrator_user_with_no_api_key.sql
+  documentation = file("./cis_v110/docs/cis_v110_1_11.md")
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    cis_item_id = "1.11"
     cis_level   = "1"
     cis_type    = "automated"
     service     = "identity"
