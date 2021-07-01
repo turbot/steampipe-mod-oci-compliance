@@ -25,4 +25,4 @@ from
   oci_identity_user a
   left join administrators_users b on a.name = b.admin_user_name
   left join oci_identity_api_key c on a.name = c.user_name,
-  oci_identity_tenancy t
+  oci_identity_tenancy t;
