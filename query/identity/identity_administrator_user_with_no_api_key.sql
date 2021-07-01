@@ -1,11 +1,12 @@
 with administrators_users as (
-select
-  a.name as admin_user_name
-from
-  oci_identity_user a,
-  jsonb_array_elements(a.user_groups) as user_group
-  inner join oci_identity_group b on (b.id = user_group ->> 'groupId' )
-  where b.name = 'Administrators' or a.identity_provider_id is not null
+  select
+    a.name as admin_user_name
+  from
+    oci_identity_user a,
+    jsonb_array_elements(a.user_groups) as user_group
+    inner join oci_identity_group b on (b.id = user_group ->> 'groupId' )
+  where
+    b.name = 'Administrators' or a.identity_provider_id is not null
 )
 select
   -- Required Columns
