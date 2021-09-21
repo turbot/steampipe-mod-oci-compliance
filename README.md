@@ -18,7 +18,7 @@ brew tap turbot/tap
 brew install steampipe
 
 steampipe -v
-steampipe version 0.5.3
+steampipe version 0.8.2
 ```
 
 2) Install the Oracle Cloud plugin
@@ -28,7 +28,7 @@ steampipe plugin install oci
 
 3) Clone this repo
 ```sh
-git clone git@github.com:turbot/steampipe-mod-oci-compliance
+git clone https://github.com/turbot/steampipe-mod-oci-compliance.git
 cd steampipe-mod-oci-compliance
 ```
 
