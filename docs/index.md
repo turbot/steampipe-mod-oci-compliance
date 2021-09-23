@@ -30,7 +30,7 @@ steampipe plugin install oci
 
 Clone:
 ```sh
-git clone git@github.com:turbot/steampipe-mod-oci-compliance
+git clone https://github.com/turbot/steampipe-mod-oci-compliance.git
 cd steampipe-mod-oci-compliance
 ```
 
