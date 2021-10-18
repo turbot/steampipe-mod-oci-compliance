@@ -11,7 +11,6 @@ with administrators_users as (
 select
   -- Required Columns
   a.id as resource,
-  a.name,
   case
     when c.user_name is not null then 'alarm'
     else 'ok'
