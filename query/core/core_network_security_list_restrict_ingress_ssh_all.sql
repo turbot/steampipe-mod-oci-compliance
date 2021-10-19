@@ -31,6 +31,7 @@ select
   end as reason,
   -- Additional Dimensions
   region,
+  nsg.compartment_id,
   coalesce(c.title, 'root') as title
 from
   oci_core_network_security_group as nsg
