@@ -6,7 +6,7 @@ repository: "https://github.com/turbot/steampipe-mod-oci-compliance"
 
 Run individual configuration, compliance and security controls or full compliance benchmarks for `CIS` across all your Oracle Cloud accounts.
 
-![image](https://github.com/turbot/steampipe-mod-oci-compliance/blob/main/docs/oci-compliance-mod-console.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci-compliance-mod-console.png)
 
 ## References
 
