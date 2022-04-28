@@ -26,7 +26,10 @@ benchmark "cis_v110_3" {
     control.cis_v110_3_16,
     control.cis_v110_3_17,
   ]
-  tags          = local.cis_v110_3_common_tags
+
+  tags = merge(local.cis_v110_3_common_tags, {
+    type = "Benchmark"
+  })
 }
 
 control "cis_v110_3_1" {
@@ -39,7 +42,7 @@ control "cis_v110_3_1" {
     cis_item_id = "3.1"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "audit"
+    service     = "OCI/Audit"
   })
 }
 
@@ -53,7 +56,7 @@ control "cis_v110_3_2" {
     cis_item_id = "3.2"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -67,7 +70,7 @@ control "cis_v110_3_3" {
     cis_item_id = "3.3"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -81,7 +84,7 @@ control "cis_v110_3_4" {
     cis_item_id = "3.4"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -95,7 +98,7 @@ control "cis_v110_3_5" {
     cis_item_id = "3.5"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -109,7 +112,7 @@ control "cis_v110_3_6" {
     cis_item_id = "3.6"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -123,7 +126,7 @@ control "cis_v110_3_7" {
     cis_item_id = "3.7"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -137,7 +140,7 @@ control "cis_v110_3_8" {
     cis_item_id = "3.8"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -151,7 +154,7 @@ control "cis_v110_3_9" {
     cis_item_id = "3.9"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -165,7 +168,7 @@ control "cis_v110_3_10" {
     cis_item_id = "3.10"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -179,7 +182,7 @@ control "cis_v110_3_11" {
     cis_item_id = "3.11"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -193,7 +196,7 @@ control "cis_v110_3_12" {
     cis_item_id = "3.12"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -207,7 +210,7 @@ control "cis_v110_3_13" {
     cis_item_id = "3.13"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "ons"
+    service     = "OCI/ONS"
   })
 }
 
@@ -221,7 +224,7 @@ control "cis_v110_3_14" {
     cis_item_id = "3.14"
     cis_level   = "2"
     cis_type    = "manual"
-    service     = "core"
+    service     = "OCI/Networking"
   })
 }
 
@@ -235,7 +238,7 @@ control "cis_v110_3_15" {
     cis_item_id = "3.15"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "cloudguard"
+    service     = "OCI/CloudGuard"
   })
 }
 
@@ -249,7 +252,7 @@ control "cis_v110_3_16" {
     cis_item_id = "3.16"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "kms"
+    service     = "OCI/KMS"
   })
 }
 
@@ -263,6 +266,6 @@ control "cis_v110_3_17" {
     cis_item_id = "3.17"
     cis_level   = "2"
     cis_type    = "manual"
-    service     = "logging"
+    service     = "OCI/Logging"
   })
 }

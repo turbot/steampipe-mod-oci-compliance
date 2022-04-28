@@ -11,7 +11,10 @@ benchmark "cis_v110_5" {
     control.cis_v110_5_1,
     control.cis_v110_5_2,
   ]
-  tags          = local.cis_v110_5_common_tags
+
+  tags = merge(local.cis_v110_5_common_tags, {
+    type    = "Benchmark"
+  })
 }
 
 control "cis_v110_5_1" {
@@ -24,7 +27,7 @@ control "cis_v110_5_1" {
     cis_item_id = "5.1"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -38,6 +41,6 @@ control "cis_v110_5_2" {
     cis_item_id = "5.2"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
