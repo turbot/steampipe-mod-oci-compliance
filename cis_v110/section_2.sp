@@ -16,7 +16,7 @@ benchmark "cis_v110_2" {
   ]
 
   tags = merge(local.cis_v110_2_common_tags, {
-    service = "OCI/Networking"
+    service = "OCI/VCN"
     type    = "Benchmark"
   })
 }
@@ -31,7 +31,7 @@ control "cis_v110_2_1" {
     cis_item_id = "2.1"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "OCI/Networking"
+    service     = "OCI/VCN"
   })
 }
 
@@ -45,7 +45,7 @@ control "cis_v110_2_2" {
     cis_item_id = "2.2"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "OCI/Networking"
+    service     = "OCI/VCN"
   })
 }
 
@@ -59,7 +59,7 @@ control "cis_v110_2_3" {
     cis_item_id = "2.3"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "OCI/Networking"
+    service     = "OCI/VCN"
   })
 }
 
@@ -73,7 +73,7 @@ control "cis_v110_2_4" {
     cis_item_id = "2.4"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "OCI/Networking"
+    service     = "OCI/VCN"
   })
 }
 
@@ -87,6 +87,6 @@ control "cis_v110_2_5" {
     cis_item_id = "2.5"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "OCI/Networking"
+    service     = "OCI/VCN"
   })
 }

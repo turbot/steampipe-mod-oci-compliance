@@ -13,6 +13,7 @@ benchmark "cis_v110_5" {
   ]
 
   tags = merge(local.cis_v110_5_common_tags, {
+    service = "OCI/Identity"
     type    = "Benchmark"
   })
 }
