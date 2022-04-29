@@ -35,7 +35,7 @@ benchmark "cis_v110_3" {
 control "cis_v110_3_1" {
   title         = "3.1 Ensure audit log retention period is set to 365 days"
   description   = "Ensuring audit logs are kept for 365 days."
-  sql           = query.identity_audit_log_retention_period_365_days.sql
+  sql           = query.identity_tenancy_audit_log_retention_period_365_days.sql
   documentation = file("./cis_v110/docs/cis_v110_3_1.md")
 
   tags = merge(local.cis_v110_3_common_tags, {
