@@ -1,10 +1,8 @@
 locals {
-  cis_v110_common_tags = {
+  cis_v110_common_tags = merge(local.oci_compliance_common_tags, {
     cis         = "true"
-    benchmark   = "cis"
     cis_version = "v1.1.0"
-    plugin      = "oci"
-  }
+  })
 }
 
 benchmark "cis_v110" {
@@ -18,5 +16,8 @@ benchmark "cis_v110" {
     benchmark.cis_v110_4,
     benchmark.cis_v110_5,
   ]
-  tags = local.cis_v110_common_tags
+
+  tags = merge(local.cis_v110_common_tags, {
+    type = "Benchmark"
+  })
 }

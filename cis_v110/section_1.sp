@@ -17,7 +17,11 @@ benchmark "cis_v110_1" {
     control.cis_v110_1_11,
     control.cis_v110_1_12,
   ]
-  tags          = local.cis_v110_1_common_tags
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    service = "OCI/Identity"
+    type    = "Benchmark"
+  })
 }
 
 control "cis_v110_1_1" {
@@ -30,7 +34,7 @@ control "cis_v110_1_1" {
     cis_item_id = "1.1"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -44,7 +48,7 @@ control "cis_v110_1_4" {
     cis_item_id = "1.4"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -58,7 +62,7 @@ control "cis_v110_1_7" {
     cis_item_id = "1.7"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -72,7 +76,7 @@ control "cis_v110_1_8" {
     cis_item_id = "1.8"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -86,7 +90,7 @@ control "cis_v110_1_9" {
     cis_item_id = "1.9"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -100,7 +104,7 @@ control "cis_v110_1_10" {
     cis_item_id = "1.10"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -114,7 +118,7 @@ control "cis_v110_1_11" {
     cis_item_id = "1.11"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }
 
@@ -128,6 +132,6 @@ control "cis_v110_1_12" {
     cis_item_id = "1.12"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "identity"
+    service     = "OCI/Identity"
   })
 }

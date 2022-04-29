@@ -1,3 +1,12 @@
+// Benchmarks and controls for specific services should override the "service" tag
+locals {
+  oci_compliance_common_tags = {
+    category = "Compliance"
+    plugin   = "oci"
+    service  = "OCI"
+  }
+}
+
 mod "oci_compliance" {
   # hub metadata
   title         = "Oracle Cloud Infrastructure Compliance"

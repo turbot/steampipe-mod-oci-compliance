@@ -10,7 +10,11 @@ benchmark "cis_v110_4" {
   children = [
     control.cis_v110_4_1,
   ]
-  tags          = local.cis_v110_4_common_tags
+
+  tags = merge(local.cis_v110_4_common_tags, {
+    service = "OCI/ObjectStorage"
+    type    = "Benchmark"
+  })
 }
 
 control "cis_v110_4_1" {
@@ -23,6 +27,6 @@ control "cis_v110_4_1" {
     cis_item_id = "4.1"
     cis_level   = "1"
     cis_type    = "manual"
-    service     = "objectstorage"
+    service     = "OCI/ObjectStorage"
   })
 }
