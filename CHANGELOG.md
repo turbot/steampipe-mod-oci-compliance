@@ -1,3 +1,9 @@
+## v0.5 [2022-05-02]
+
+_Enhancements_
+
+- Added `category`, `service`, and `type` tags to benchmarks and controls. ([#38](https://github.com/turbot/steampipe-mod-oci-compliance/pull/38))
+
 ## v0.4 [2021-11-10]
 
 _Enhancements_
