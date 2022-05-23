@@ -21,6 +21,7 @@ select
   end as reason,
   -- Additional Dimensions
   s.region,
+  s.compartment_id,
   coalesce(c.name, 'root') as compartment
 from
   oci_core_subnet as s

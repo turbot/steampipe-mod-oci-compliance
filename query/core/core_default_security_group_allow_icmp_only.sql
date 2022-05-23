@@ -21,7 +21,8 @@ select
     else a.display_name || ' configured with ICMP ports only.'
   end as reason,
   -- Additional Dimensions
-  a.region
+  a.region,
+  a.compartment_id
 from
   oci_core_security_list a
   left join oci_core_vcn b on a.vcn_id = b.id

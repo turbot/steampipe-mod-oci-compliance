@@ -33,6 +33,7 @@ select
   end as reason,
   -- Additional Dimensions
   region,
+  osl.compartment_id,
   coalesce(c.title, 'root') as title
 from
   oci_core_security_list as osl
