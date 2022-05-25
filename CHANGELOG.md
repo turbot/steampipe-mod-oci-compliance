@@ -2,7 +2,7 @@
 
 _Breaking changes_
 
-- Renamed the following queries to correctly reference `security_group` instead of `security_list` since the former resources are getting evaluated: ([#47](https://github.com/turbot/steampipe-mod-oci-compliance/pull/47))
+- Renamed the following queries to correctly reference `security_group` based on the tables referenced: ([#47](https://github.com/turbot/steampipe-mod-oci-compliance/pull/47))
   - `core_network_security_list_restrict_ingress_ssh_all` to `core_network_security_group_restrict_ingress_ssh_all`
   - `core_network_security_list_restrict_ingress_rdp_all` to `core_network_security_group_restrict_ingress_rdp_all`
   - `core_default_security_group_allow_icmp_only` to `core_default_security_list_allow_icmp_only`
