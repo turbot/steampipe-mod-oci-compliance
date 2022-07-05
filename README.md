@@ -1,4 +1,4 @@
-# Oracle Cloud Compliance Scanning Tool
+# Oracle Cloud Compliance Mod for Steampipe
 
 30+ checks covering industry defined security best practices across all Oracle Cloud regions.
 
