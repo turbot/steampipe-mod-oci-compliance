@@ -11,6 +11,7 @@ select
   end as reason,
   -- Additional Dimensions
   region,
+  a.compartment_id,
   coalesce(c.name, 'root') as compartment
 from
   oci_objectstorage_bucket as a

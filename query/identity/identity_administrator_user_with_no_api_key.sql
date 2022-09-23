@@ -20,7 +20,8 @@ select
     else a.name || ' has no API Key.'
   end as reason,
   -- Additional Dimensions
-  t.title
+  t.tenant_id,
+  t.title as tenant
 from
   oci_identity_user a
   left join administrators_users b on a.name = b.admin_user_name

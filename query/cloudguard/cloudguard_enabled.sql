@@ -11,7 +11,7 @@ select
   end as reason,
   -- Additional Dimensions
   reporting_region,
-  c.name
+  t.name as tenant
 from
   oci_cloud_guard_configuration a
-  left join oci_identity_tenancy as c on c.tenant_id = a.tenant_id;
+  left join oci_identity_tenancy as t on t.tenant_id = a.tenant_id;

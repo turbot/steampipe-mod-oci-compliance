@@ -20,7 +20,8 @@ select
     else 'No additional compartments exist in tenancy.'
   end as reason,
   -- Additional Dimensions
-  b.title as compartment
+  b.tenant_id,
+  b.title as tenant
 from
   compartment_count as a
   left join oci_identity_tenancy as b on b.tenant_id = a.tenant_id;

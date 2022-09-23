@@ -11,7 +11,8 @@ select
     else a.name || ' password login enabled but no MFA device configured.'
   end as reason,
   -- Additional Dimensions
-  t.title
+  a.tenant_id,
+  t.title as tenant
 from
   oci_identity_user as a,
   oci_identity_tenancy as t;

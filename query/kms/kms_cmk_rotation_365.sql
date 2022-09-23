@@ -34,6 +34,7 @@ select
   end as reason,
   -- Additional Dimensions
   region,
+  a.compartment_id,
   coalesce(c.name, 'root') as compartment
 from
   active_key_table a

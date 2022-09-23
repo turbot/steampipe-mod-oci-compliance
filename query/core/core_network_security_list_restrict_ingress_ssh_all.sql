@@ -32,7 +32,7 @@ select
   -- Additional Dimensions
   region,
   nsg.compartment_id,
-  coalesce(c.title, 'root') as title
+  coalesce(c.title, 'root') as compartment
 from
   oci_core_network_security_group as nsg
   left join non_compliant_rules on non_compliant_rules.id = nsg.id

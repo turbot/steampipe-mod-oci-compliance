@@ -9,7 +9,8 @@ select
     ' (' || extract(day from current_timestamp - time_created) || ' days).'
   as reason,
   -- Additional Dimensions
-  t.title
+  t.tenant_id,
+  t.title as tenant
 from
   oci_identity_auth_token as a,
   oci_identity_tenancy as t;

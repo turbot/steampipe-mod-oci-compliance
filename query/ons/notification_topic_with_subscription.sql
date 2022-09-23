@@ -11,6 +11,7 @@ select
   end as reason,
   -- Additional Dimensions
   t.region,
+  t.compartment_id,
   coalesce(c.name, 'root') as compartment
 from
   oci_ons_notification_topic as t

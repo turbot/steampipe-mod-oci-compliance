@@ -8,6 +8,6 @@ select
   'Audit log retention period set to ' || retention_period_days || '.'
   as reason,
   -- Additional Dimensions
-  name
+  name as tenant
 from
   oci_identity_tenancy;

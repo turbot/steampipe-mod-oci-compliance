@@ -34,7 +34,7 @@ select
   -- Additional Dimensions
   region,
   osl.compartment_id,
-  coalesce(c.title, 'root') as title
+  coalesce(c.title, 'root') as compartment
 from
   oci_core_security_list as osl
   left join non_compliant_rules on non_compliant_rules.id = osl.id

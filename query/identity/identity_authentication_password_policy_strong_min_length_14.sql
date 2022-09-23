@@ -17,7 +17,8 @@ select
     else 'Strong password policies not configured.'
   end as reason,
   -- Additional Dimensions
-  t.title
+  t.tenant_id,
+  t.title as tenant
 from
   oci_identity_authentication_policy as a,
   oci_identity_tenancy as t;

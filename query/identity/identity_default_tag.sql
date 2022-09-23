@@ -20,7 +20,8 @@ select
     else 'Default tag criteria meets as CIS per recommendation.'
   end as reason,
   -- Additional Dimensions
-  'root' as compartment
+  t.tenant_id,
+  t.title as tenant
 from
   oci_identity_tenancy t
   left join default_tag_count d on t.tenant_id = d.compartment_id;

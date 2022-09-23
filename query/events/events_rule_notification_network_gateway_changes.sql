@@ -67,6 +67,7 @@ select
   end as reason,
   -- Additional Dimensions
   t.region,
+  t.compartment_id,
   coalesce(c.name, 'root') as compartment
 from
   oci_events_rule t

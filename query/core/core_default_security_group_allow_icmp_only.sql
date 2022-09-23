@@ -22,10 +22,12 @@ select
   end as reason,
   -- Additional Dimensions
   a.region,
-  a.compartment_id
+  a.compartment_id,
+  coalesce(c.title, 'root') as compartment
 from
   oci_core_security_list a
   left join oci_core_vcn b on a.vcn_id = b.id
   left join default_security_list as p on p.id = a.id
+  left join oci_identity_compartment c on c.id = a.compartment_id
 where
   a.display_name = concat('Default Security List for ', b.display_name);
