@@ -89,7 +89,7 @@ query "identity_default_tag" {
       from
         oci_identity_tag_default
       where
-        lifecycle_state = 'ACTIVE' and value = '{iam.principal.name}'
+        lifecycle_state = 'ACTIVE' and value = '$${iam.principal.name}'
       group by compartment_id
     )
     select
