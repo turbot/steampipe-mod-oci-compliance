@@ -14,7 +14,7 @@ variable "common_dimensions" {
   # - connection_name (_ctx ->> 'connection_name')
   # - region
   # - tenant_id
-  default     = ["region", "connection_name", "tenant_id"]
+  default     = ["region", "tenant_id"]
 }
 
 variable "tag_dimensions" {
@@ -44,7 +44,7 @@ locals {
   # Local internal variable to build the SQL select clause for tag
   # dimensions. Do not edit directly.
   tag_dimensions_qualifier_sql = <<-EOQ
-  %{~ for dim in var.tag_dimensions },  __QUALIFIER__tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~} 
+  %{~ for dim in var.tag_dimensions },  __QUALIFIER__tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~}
   EOQ
 
 }
