@@ -23,10 +23,10 @@ query "events_rule_notification_iam_group_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for IAM group changes.'
         else t.title || ' not configured for IAM group changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
-      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}   
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -59,10 +59,10 @@ query "events_rule_notification_iam_policy_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for IAM policy changes.'
         else t.title || ' not configured for IAM policy changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -99,10 +99,10 @@ query "events_rule_notification_iam_user_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for IAM user changes.'
         else t.title || ' not configured for IAM user changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -135,10 +135,10 @@ query "events_rule_notification_identity_provider_changes" {
             and t.lifecycle_state = 'ACTIVE'
             and t.is_enabled then t.title || ' configured for identity provider changes.'
         else t.title || ' not configured for identity provider changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -171,10 +171,10 @@ query "events_rule_notification_idp_group_mapping_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for IdP group mapping changes.'
         else t.title || ' not configured for IdP group mapping changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -249,10 +249,10 @@ query "events_rule_notification_network_gateway_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for network gateway changes.'
         else t.title || ' not configured for network gateway changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
-      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}      
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -287,10 +287,10 @@ query "events_rule_notification_network_security_list_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for network security group changes.'
         else t.title || ' not configured for network security group changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -325,10 +325,10 @@ query "events_rule_notification_route_table_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for route tables changes.'
         else t.title || ' not configured for route tables changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -363,10 +363,10 @@ query "events_rule_notification_security_list_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for security list changes.'
         else t.title || ' not configured for security list changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
-      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}      
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,
@@ -399,10 +399,10 @@ query "events_rule_notification_vcn_changes" {
           and t.lifecycle_state = 'ACTIVE'
           and t.is_enabled then t.title || ' configured for VCN changes.'
         else t.title || ' not configured for VCN changes.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
-      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")} 
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_events_rule t
       left join oci_identity_compartment as c on c.id = t.compartment_id,

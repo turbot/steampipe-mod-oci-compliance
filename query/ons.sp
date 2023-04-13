@@ -9,10 +9,10 @@ query "notification_topic_with_subscription" {
       case
         when s.lifecycle_state = 'ACTIVE' then t.title || ' with active subscription.'
         else t.title || ' with no active subscription.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_ons_notification_topic as t
       inner join oci_ons_subscription as s on (t.topic_id = s.topic_id)

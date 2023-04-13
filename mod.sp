@@ -14,7 +14,10 @@ variable "common_dimensions" {
   # - connection_name (_ctx ->> 'connection_name')
   # - region
   # - tenant_id
-  default     = ["region", "tenant_id"]
+  # - tenant
+  # - compartment
+  # - compartment_id
+  default     = ["region", "compartment", "tenant"]
 }
 
 variable "tag_dimensions" {
@@ -34,17 +37,30 @@ locals {
   %{~ if contains(var.common_dimensions, "connection_name") }, __QUALIFIER___ctx ->> 'connection_name' as connection_name%{ endif ~}
   %{~ if contains(var.common_dimensions, "region") }, __QUALIFIER__region as region%{ endif ~}
   %{~ if contains(var.common_dimensions, "tenant_id") }, __QUALIFIER__tenant_id as tenant_id%{ endif ~}
+  %{~ if contains(var.common_dimensions, "tenant") }, __QUALIFIER__tenant_name as tenant%{ endif ~}
   EOQ
 
   common_dimensions_qualifier_global_sql = <<-EOQ
   %{~ if contains(var.common_dimensions, "connection_name") }, __QUALIFIER___ctx ->> 'connection_name' as connection_name%{ endif ~}
   %{~ if contains(var.common_dimensions, "tenant_id") }, __QUALIFIER__tenant_id as tenant_id%{ endif ~}
+  %{~ if contains(var.common_dimensions, "tenant") }, __QUALIFIER__tenant_name as tenant%{ endif ~}
+  EOQ
+
+ common_dimensions_qualifier_tenancy_sql = <<-EOQ
+  %{~ if contains(var.common_dimensions, "connection_name") }, __QUALIFIER___ctx ->> 'connection_name' as connection_name%{ endif ~}
+  %{~ if contains(var.common_dimensions, "tenant_id") }, __QUALIFIER__tenant_id as tenant_id%{ endif ~}
+  %{~ if contains(var.common_dimensions, "tenant") }, __QUALIFIER__name as tenant%{ endif ~}
+  EOQ
+
+  common_dimensions_qualifier_compartment_sql = <<-EOQ
+  %{~ if contains(var.common_dimensions, "compartment") }, coalesce(__QUALIFIER__name, 'root') as compartment%{ endif ~}
+  %{~ if contains(var.common_dimensions, "compartment_id") }, __QUALIFIER__compartment_id as compartment_id%{ endif ~}
   EOQ
 
   # Local internal variable to build the SQL select clause for tag
   # dimensions. Do not edit directly.
   tag_dimensions_qualifier_sql = <<-EOQ
-  %{~ for dim in var.tag_dimensions },  __QUALIFIER__tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~}
+  %{~ for dim in var.tag_dimensions }, __QUALIFIER__tags ->> '${dim}' as "${replace(dim, "\"", "\"\"")}"%{ endfor ~}
   EOQ
 
 }
@@ -55,6 +71,9 @@ locals {
 
   common_dimensions_sql = replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "")
   common_dimensions_global_sql = replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "")
+  common_dimensions_compartment_sql = replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "")
+  common_dimensions_tenancy_sql = replace(local.common_dimensions_qualifier_tenancy_sql, "__QUALIFIER__", "")
+
   tag_dimensions_sql = replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "")
 }
 

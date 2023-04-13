@@ -12,7 +12,6 @@ query "identity_administrator_user_with_no_api_key" {
     )
     select
       a.id as resource,
-      a.name,
       case
         when c.user_name is not null then 'alarm'
         else 'ok'
@@ -20,42 +19,38 @@ query "identity_administrator_user_with_no_api_key" {
       case
         when c.user_name is not null then a.name || ' has API Key.'
         else a.name || ' has no API Key.'
-      end as reason,
-      t.title
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
     from
       oci_identity_user a
       left join administrators_users b on a.name = b.admin_user_name
-      left join oci_identity_api_key c on a.name = c.user_name,
-      oci_identity_tenancy t;
+      left join oci_identity_api_key c on a.name = c.user_name;
   EOQ
 }
 
 query "identity_auth_token_age_90" {
   sql = <<-EOQ
     select
-      a.user_id as resource,
+      user_id as resource,
       case
         when lifecycle_state = 'ACTIVE' and (date(current_timestamp) - date(time_created)) >= 90 then 'alarm'
         else 'ok'
       end as status,
       user_name || ' auth token created ' || to_char(time_created , 'DD-Mon-YYYY') ||
         ' (' || extract(day from current_timestamp - time_created) || ' days).'
-      as reason,
-      t.title
+      as reason
       ${local.tag_dimensions_sql}
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_auth_token as a,
-      oci_identity_tenancy as t;
+      oci_identity_auth_token as a;
   EOQ
 }
 
 query "identity_authentication_password_policy_strong_min_length_14" {
   sql = <<-EOQ
     select
-      a.tenant_id as resource,
+      tenant_id as resource,
       case
         when
           minimum_password_length >= 14
@@ -70,13 +65,11 @@ query "identity_authentication_password_policy_strong_min_length_14" {
           and (is_numeric_characters_required or is_special_characters_required)
         then 'Strong password policies configured.'
         else 'Strong password policies not configured.'
-      end as reason,
-      t.title
+      end as reason
       ${local.tag_dimensions_sql}
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_authentication_policy as a,
-      oci_identity_tenancy as t;
+      oci_identity_authentication_policy;
   EOQ
 }
 
@@ -101,9 +94,8 @@ query "identity_default_tag" {
       case
         when d.compartment_id is null then 'Default tag criteria does not meet as per CIS recommendation.'
         else 'Default tag criteria meets as CIS per recommendation.'
-      end as reason,
-      'root' as compartment
-      ${local.tag_dimensions_sql}
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "t.")}
     from
       oci_identity_tenancy t
@@ -120,10 +112,9 @@ query "identity_tenancy_audit_log_retention_period_365_days" {
         else 'ok'
       end as status,
       'Audit log retention period set to ' || retention_period_days || '.'
-      as reason,
-      name
+      as reason
       ${local.tag_dimensions_sql}
-      ${local.common_dimensions_global_sql}
+      ${local.common_dimensions_tenancy_sql}
     from
       oci_identity_tenancy;
   EOQ
@@ -135,12 +126,16 @@ query "identity_tenancy_with_one_active_compartment" {
       select
         count (compartment_id),
         tenant_id,
+        tenant_name,
         _ctx
       from
         oci_identity_compartment
       where
         lifecycle_state = 'ACTIVE' and name <> 'ManagedCompartmentForPaaS'
-      group by tenant_id, _ctx
+      group by
+        tenant_id,
+        _ctx,
+        tenant_name
     )
     select
       a.tenant_id as resource,
@@ -151,9 +146,8 @@ query "identity_tenancy_with_one_active_compartment" {
       case
         when a.count > 1 then a.count || ' compartments exist in tenancy.'
         else 'No additional compartments exist in tenancy.'
-      end as reason,
-      b.title as compartment
-      ${local.tag_dimensions_sql} 
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "b.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
     from
       compartment_count as a
@@ -170,9 +164,7 @@ query "identity_user_api_key_age_90" {
         else 'ok'
       end as status,
       user_name || ' API key' || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
-      as reason,
-      t.title
-      ${local.tag_dimensions_sql}
+      as reason
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "k.")}
     from
       oci_identity_api_key k,
@@ -192,8 +184,7 @@ query "identity_user_console_access_mfa_enabled" {
         when not can_use_console_password then a.name || ' password login disabled.'
         when is_mfa_activated then a.name || ' password login enabled and MFA device configured.'
         else a.name || ' password login enabled but no MFA device configured.'
-      end as reason,
-      t.title
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
     from
@@ -211,9 +202,8 @@ query "identity_user_customer_secret_key_age_90" {
         else 'ok'
       end as status,
       user_name || ' ' || a.display_name || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
-      as reason,
-      t.title
-      ${local.tag_dimensions_sql}
+      as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
     from
       oci_identity_customer_secret_key as a,
@@ -234,8 +224,7 @@ query "identity_user_valid_email" {
         when email is null then a.name || ' not associated with email address.'
         when not email_verified then a.name || ' associated with unverified email address.'
         else a.name || ' associated with valid email address.'
-      end as reason,
-      t.title
+      end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
       ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
     from

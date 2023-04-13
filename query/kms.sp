@@ -10,7 +10,9 @@ query "kms_cmk_rotation_365" {
         k.lifecycle_state,
         k._ctx,
         k.tenant_id,
+        k.tenant_name,
         k.region,
+        k.tags,
         max(v.time_created) as last_version_created_date
       from
         oci_kms_key k,
@@ -20,7 +22,7 @@ query "kms_cmk_rotation_365" {
         and v.management_endpoint = k.management_endpoint
         and v.region = k.region
       group by
-        key_name, k.region, k.id, k.vault_name, k.lifecycle_state, k.tenant_id, k._ctx, k.compartment_id
+        key_name, k.region, k.id, k.vault_name, k.lifecycle_state, k.tenant_id, k._ctx, k.compartment_id, k.tenant_name, k.tags
     )
     select
       a.id as resource,
@@ -35,9 +37,10 @@ query "kms_cmk_rotation_365" {
         when last_version_created_date <= (current_date - interval '365' day)
         then a.key_name || ' in ' || a.vault_name || ' vault not rotated since ' || (date(current_timestamp) - date(last_version_created_date)) || ' days.'
         else a.key_name || ' in ' || a.vault_name || ' vault last rotation age ' || (date(current_timestamp) - date(last_version_created_date)) || ' days.'
-      end as reason,
-      coalesce(c.name, 'root') as compartment
-      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}            
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       active_key_table a
       left join oci_identity_compartment c on c.id = a.compartment_id;
