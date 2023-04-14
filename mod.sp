@@ -46,12 +46,6 @@ locals {
   %{~ if contains(var.common_dimensions, "tenant") }, __QUALIFIER__tenant_name as tenant%{ endif ~}
   EOQ
 
- common_dimensions_qualifier_tenancy_sql = <<-EOQ
-  %{~ if contains(var.common_dimensions, "connection_name") }, __QUALIFIER___ctx ->> 'connection_name' as connection_name%{ endif ~}
-  %{~ if contains(var.common_dimensions, "tenant_id") }, __QUALIFIER__tenant_id as tenant_id%{ endif ~}
-  %{~ if contains(var.common_dimensions, "tenant") }, __QUALIFIER__name as tenant%{ endif ~}
-  EOQ
-
   common_dimensions_qualifier_compartment_sql = <<-EOQ
   %{~ if contains(var.common_dimensions, "compartment") }, coalesce(__QUALIFIER__name, 'root') as compartment%{ endif ~}
   %{~ if contains(var.common_dimensions, "compartment_id") }, __QUALIFIER__compartment_id as compartment_id%{ endif ~}
@@ -72,8 +66,6 @@ locals {
   common_dimensions_sql = replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "")
   common_dimensions_global_sql = replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "")
   common_dimensions_compartment_sql = replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "")
-  common_dimensions_tenancy_sql = replace(local.common_dimensions_qualifier_tenancy_sql, "__QUALIFIER__", "")
-
   tag_dimensions_sql = replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "")
 }
 

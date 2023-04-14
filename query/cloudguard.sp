@@ -11,7 +11,6 @@ query "cloudguard_enabled" {
         else 'CloudGuard disabled.'
       end as reason,
       reporting_region
-      ${local.tag_dimensions_sql}
       ${local.common_dimensions_global_sql}
     from
       oci_cloud_guard_configuration;

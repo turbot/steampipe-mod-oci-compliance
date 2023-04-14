@@ -40,10 +40,9 @@ query "identity_auth_token_age_90" {
       user_name || ' auth token created ' || to_char(time_created , 'DD-Mon-YYYY') ||
         ' (' || extract(day from current_timestamp - time_created) || ' days).'
       as reason
-      ${local.tag_dimensions_sql}
       ${local.common_dimensions_global_sql}
     from
-      oci_identity_auth_token as a;
+      oci_identity_auth_token;
   EOQ
 }
 
@@ -66,7 +65,6 @@ query "identity_authentication_password_policy_strong_min_length_14" {
         then 'Strong password policies configured.'
         else 'Strong password policies not configured.'
       end as reason
-      ${local.tag_dimensions_sql}
       ${local.common_dimensions_global_sql}
     from
       oci_identity_authentication_policy;
@@ -83,7 +81,8 @@ query "identity_default_tag" {
         oci_identity_tag_default
       where
         lifecycle_state = 'ACTIVE' and value = '$${iam.principal.name}'
-      group by compartment_id
+      group by
+        compartment_id
     )
     select
       t.tenant_id as resource,
@@ -114,7 +113,7 @@ query "identity_tenancy_audit_log_retention_period_365_days" {
       'Audit log retention period set to ' || retention_period_days || '.'
       as reason
       ${local.tag_dimensions_sql}
-      ${local.common_dimensions_tenancy_sql}
+      ${local.common_dimensions_global_sql}
     from
       oci_identity_tenancy;
   EOQ
@@ -165,70 +164,65 @@ query "identity_user_api_key_age_90" {
       end as status,
       user_name || ' API key' || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
       as reason
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "k.")}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_api_key k,
-      oci_identity_tenancy t;
+      oci_identity_api_key
   EOQ
 }
 
 query "identity_user_console_access_mfa_enabled" {
   sql = <<-EOQ
     select
-      a.id as resource,
+      id as resource,
       case
         when can_use_console_password and is_mfa_activated then 'ok'
         else 'alarm'
       end as status,
       case
-        when not can_use_console_password then a.name || ' password login disabled.'
-        when is_mfa_activated then a.name || ' password login enabled and MFA device configured.'
-        else a.name || ' password login enabled but no MFA device configured.'
+        when not can_use_console_password then name || ' password login disabled.'
+        when is_mfa_activated then name || ' password login enabled and MFA device configured.'
+        else name || ' password login enabled but no MFA device configured.'
       end as reason
-      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_user as a,
-      oci_identity_tenancy as t;
+      oci_identity_user;
   EOQ
 }
 
 query "identity_user_customer_secret_key_age_90" {
   sql = <<-EOQ
     select
-      a.id as resource,
+      id as resource,
       case
         when lifecycle_state = 'ACTIVE' and (date(current_timestamp) - date(time_created)) >= 90 then 'alarm'
         else 'ok'
       end as status,
-      user_name || ' ' || a.display_name || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
+      user_name || ' ' || display_name || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
       as reason
-      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_customer_secret_key as a,
-      oci_identity_tenancy as t;
+      oci_identity_customer_secret_key;
   EOQ
 }
 
 query "identity_user_valid_email" {
   sql = <<-EOQ
     select
-      a.id as resource,
+      id as resource,
       case
         when email is null then 'alarm'
         when not email_verified then 'alarm'
         else 'ok'
       end as status,
       case
-        when email is null then a.name || ' not associated with email address.'
-        when not email_verified then a.name || ' associated with unverified email address.'
-        else a.name || ' associated with valid email address.'
+        when email is null then name || ' not associated with email address.'
+        when not email_verified then name || ' associated with unverified email address.'
+        else name || ' associated with valid email address.'
       end as reason
-      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
-      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "a.")}
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_global_sql}
     from
-      oci_identity_user as a,
-      oci_identity_tenancy as t;
+      oci_identity_user as a;
   EOQ
 }
