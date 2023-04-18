@@ -13,10 +13,11 @@ variable "common_dimensions" {
   # Define which common dimensions should be added to each control.
   # - connection_name (_ctx ->> 'connection_name')
   # - region
-  # - tenant_id
   # - tenant
+  # - tenant_id
   # - compartment
   # - compartment_id
+  
   default     = ["region", "compartment", "tenant"]
 }
 
