@@ -83,4 +83,10 @@ mod "oci_compliance" {
     description = "Run individual configuration, compliance and security controls or full compliance benchmarks for CIS across all of your Oracle Cloud Infrastructure accounts using Steampipe."
     image       = "/images/mods/turbot/oci-compliance-social-graphic.png"
   }
+
+  require {
+    plugin "oci" {
+      version = "0.23.0"
+    }
+  }
 }
