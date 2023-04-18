@@ -1,4 +1,3 @@
-
 query "kms_cmk_rotation_365" {
   sql = <<-EOQ
     with active_key_table as (
