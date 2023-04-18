@@ -104,7 +104,7 @@ The benchmark queries use common properties (like `connection_name`, `region`, `
   ```
 
   ```shell
-  SP_VAR_tag_dimensions='[ "Department", "Environment"]' steampipe check control.cis_v110_2_1
+  SP_VAR_tag_dimensions='["Department", "Environment"]' steampipe check control.cis_v110_2_1
   ```
 
 ## Contributing

@@ -11,13 +11,12 @@ variable "common_dimensions" {
   type        = list(string)
   description = "A list of common dimensions to add to each control."
   # Define which common dimensions should be added to each control.
+  # - compartment
+  # - compartment_id
   # - connection_name (_ctx ->> 'connection_name')
   # - region
   # - tenant
   # - tenant_id
-  # - compartment
-  # - compartment_id
-
   default = ["region", "compartment", "tenant"]
 }
 
