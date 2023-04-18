@@ -17,7 +17,7 @@ variable "common_dimensions" {
   # - region
   # - tenant
   # - tenant_id
-  default = ["region", "compartment", "tenant"]
+  default = ["compartment", "region", "tenant"]
 }
 
 variable "tag_dimensions" {

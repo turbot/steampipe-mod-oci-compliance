@@ -95,7 +95,7 @@ No extra configuration is required.
 
 ### Common and Tag Dimensions
 
-The benchmark queries use common properties (like `connection_name`, `region`, `tenant`, `tenant_id`, `compartment` and `compartment_id`) and tags that are defined in the form of a default list of strings in the `mod.sp` file. These properties can be overwritten in several ways:
+The benchmark queries use common properties (like `compartment`, `compartment_id`, `connection_name`, `region`, `tenant` and `tenant_id`) and tags that are defined in the form of a default list of strings in the `mod.sp` file. These properties can be overwritten in several ways:
 
 - Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
 - Pass in a value on the command line:
@@ -105,7 +105,7 @@ The benchmark queries use common properties (like `connection_name`, `region`, `
   ```
 
   ```shell
-  steampipe check benchmark.cis_v110 --var 'tag_dimensions=[ "Department", "Environment"]'
+  steampipe check benchmark.cis_v110 --var 'tag_dimensions=["Department", "Environment"]'
   ```
 
 - Set an environment variable:

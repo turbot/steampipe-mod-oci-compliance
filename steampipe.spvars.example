@@ -1,3 +1,4 @@
 # Dimensions
-common_dimensions = ["region", "compartment", "tenant"]
+# Possible values for common dimensions: `compartment`, `compartment_id`, `connection_name`, `region`, `tenant` and `tenant_id`
+common_dimensions = ["compartment", "region", "tenant"]
 tag_dimensions    = []
