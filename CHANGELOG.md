@@ -1,3 +1,14 @@
+## v0.8 [2023-04-18]
+
+_Dependencies_
+
+- OCI plugin `v0.23.0` or higher is now required. ([#63](https://github.com/turbot/steampipe-mod-oci-compliance/pull/63))
+
+_What's new?_
+
+- Added `compartment_id`, `connection_name`, `tenant` and `tenant_id` in the common dimensions to group and filter findings. (see [var.common_dimensions](https://hub.steampipe.io/mods/turbot/oci_compliance/variables)) ([#59](https://github.com/turbot/steampipe-mod-oci-compliance/pull/59))
+- Added `tags` as dimensions to group and filter findings. (see [var.tag_dimensions](https://hub.steampipe.io/mods/turbot/oci_compliance/variables)) ([#59](https://github.com/turbot/steampipe-mod-oci-compliance/pull/59))
+
 ## v0.7 [2022-05-25]
 
 _Bug fixes_
