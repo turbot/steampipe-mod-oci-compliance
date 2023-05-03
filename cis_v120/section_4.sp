@@ -77,7 +77,7 @@ control "cis_v120_4_1_2" {
 control "cis_v120_4_1_3" {
   title         = "4.1.3 Ensure Versioning is Enabled for Object Storage Buckets"
   description   = "A bucket is a logical container for storing objects. Object versioning is enabled at the bucket level and is disabled by default upon creation. Versioning directs Object Storage to automatically create an object version each time a new object is uploaded, an existing object is overwritten, or when an object is deleted. You can enable object versioning at bucket creation time or later."
-  query         = query.manual_control
+  query         = query.objectstorage_bucket_versioning_enabled
   documentation = file("./cis_v120/docs/cis_v120_4_1_3.md")
 
   tags = merge(local.cis_v120_4_1_common_tags, {
