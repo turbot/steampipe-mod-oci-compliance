@@ -1,12 +1,12 @@
 locals {
   cis_v120_common_tags = merge(local.oci_compliance_common_tags, {
     cis         = "true"
-    cis_version = "v1.1.0"
+    cis_version = "v1.2.0"
   })
 }
 
 benchmark "cis_v120" {
-  title         = "CIS v1.1.0"
+  title         = "CIS v1.2.0"
   description   = "The CIS Oracle Cloud Infrastructure Foundations Benchmark, provides prescriptive guidance for establishing a secure baseline configuration for the Oracle Cloud Infrastructure environment."
   documentation = file("./cis_v120/docs/cis_overview.md")
   children = [
