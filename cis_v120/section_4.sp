@@ -4,13 +4,25 @@ locals {
   })
 }
 
+locals {
+  cis_v120_4_1_common_tags = merge(local.cis_v120_4_common_tags, {
+    cis_section_id = "4.1"
+  })
+  cis_v120_4_2_common_tags = merge(local.cis_v120_4_common_tags, {
+    cis_section_id = "4.2"
+  })
+  cis_v120_4_3_common_tags = merge(local.cis_v120_4_common_tags, {
+    cis_section_id = "4.3"
+  })
+}
+
 benchmark "cis_v120_4" {
   title         = "4 Object Storage"
   documentation = file("./cis_v120/docs/cis_v120_4.md")
   children = [
-    control.cis_v120_4_1,
-    control.cis_v120_4_2,
-    control.cis_v120_4_3,
+    benchmark.cis_v120_4_1,
+    benchmark.cis_v120_4_2,
+    benchmark.cis_v120_4_3,
   ]
 
   tags = merge(local.cis_v120_4_common_tags, {
@@ -19,13 +31,13 @@ benchmark "cis_v120_4" {
   })
 }
 
-control "cis_v120_4_1" {
+benchmark "cis_v120_4_1" {
   title         = "4.1 Object Storage"
   documentation = file("./cis_v120/docs/cis_v120_4_1.md")
   children = [
     control.cis_v120_4_1_1,
     control.cis_v120_4_1_2,
-    control.cis_v120_4_1_3,
+    control.cis_v120_4_1_3
   ]
 
   tags = merge(local.cis_v120_4_1_common_tags, {
@@ -76,12 +88,12 @@ control "cis_v120_4_1_3" {
   })
 }
 
-control "cis_v120_4_2" {
+benchmark "cis_v120_4_2" {
   title         = "4.2 Block Volumes"
   documentation = file("./cis_v120/docs/cis_v120_4_2.md")
   children = [
     control.cis_v120_4_2_1,
-    control.cis_v120_4_2_2,
+    control.cis_v120_4_2_2
   ]
 
   tags = merge(local.cis_v120_4_2_common_tags, {
@@ -118,7 +130,7 @@ control "cis_v120_4_2_2" {
   })
 }
 
-control "cis_v120_4_3" {
+benchmark "cis_v120_4_3" {
   title         = "4.3 File Storage Service"
   documentation = file("./cis_v120/docs/cis_v120_4_3.md")
   children = [
