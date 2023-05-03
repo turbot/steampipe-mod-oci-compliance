@@ -57,7 +57,7 @@ control "cis_v120_1_2" {
     service     = "OCI/Identity"
   })
 }
-//new
+
 control "cis_v120_1_3" {
   title         = "1.3 Ensure IAM administrators cannot update tenancy Administrators group"
   description   = "Tenancy administrators can create more users, groups, and policies to provide other service administrators access to OCI resources."
@@ -85,7 +85,7 @@ control "cis_v120_1_4" {
     service     = "OCI/Identity"
   })
 }
-// new
+
 control "cis_v120_1_5" {
   title         = "1.5 Ensure IAM password policy expires passwords within 365 days"
   description   = "IAM password policies can require passwords to be rotated or expired after a given number of days. It is recommended that the password policy expire passwords after 365 and are changed immediately based on events."
@@ -99,7 +99,7 @@ control "cis_v120_1_5" {
     service     = "OCI/Identity"
   })
 }
-// new
+
 control "cis_v120_1_6" {
   title         = "1.6 Ensure IAM password policy prevents password reuse"
   description   = "IAM password policies can prevent the reuse of a given password by the same user. It is recommended the password policy prevent the reuse of passwords."
@@ -113,7 +113,7 @@ control "cis_v120_1_6" {
     service     = "OCI/Identity"
   })
 }
-//till 1.4
+
 control "cis_v120_1_7" {
   title         = "1.7 Ensure MFA is enabled for all users with a console password"
   description   = "Multi-factor authentication is a method of authentication that requires the use of more than one factor to verify a user's identity."
