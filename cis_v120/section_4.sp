@@ -63,7 +63,7 @@ control "cis_v120_4_1_1" {
 control "cis_v120_4_1_2" {
   title         = "4.1.2 Ensure Object Storage Buckets are encrypted with a Customer Managed Key"
   description   = "Oracle Object Storage buckets support encryption with a Customer Managed Key (CMK). By default, Object Storage buckets are encrypted with an Oracle managed key."
-  query         = query.manual_control
+  query         = query.objectstorage_bucket_cmk_encryption_enabled
   documentation = file("./cis_v120/docs/cis_v120_4_1_2.md")
 
   tags = merge(local.cis_v120_4_1_common_tags, {
@@ -105,7 +105,7 @@ benchmark "cis_v120_4_2" {
 control "cis_v120_4_2_1" {
   title         = "4.2.1 Ensure Block Volumes are encrypted with Customer Managed Keys (CMK)"
   description   = "Oracle Cloud Infrastructure Block Volume service lets you dynamically provision and manage block storage volumes. By default, the Oracle service manages the keys that encrypt this block volume. Block Volumes can also be encrypted using a customer managed key."
-  query         = query.manual_control
+  query         = query.blockstorage_block_volume_cmk_encryption_enabled
   documentation = file("./cis_v120/docs/cis_v120_4_2_1.md")
 
   tags = merge(local.cis_v120_4_2_common_tags, {
@@ -119,7 +119,7 @@ control "cis_v120_4_2_1" {
 control "cis_v120_4_2_2" {
   title         = "4.2.2 Ensure boot volumes are encrypted with Customer Managed Key (CMK)"
   description   = "When you launch a virtual machine (VM) or bare metal instance based on a platform image or custom image, a new boot volume for the instance is created in the same compartment. That boot volume is associated with that instance until you terminate the instance. By default, the Oracle service manages the keys that encrypt this boot volume. Boot Volumes can also be encrypted using a customer managed key."
-  query         = query.manual_control
+  query         = query.blockstorage_boot_volume_cmk_encryption_enabled
   documentation = file("./cis_v120/docs/cis_v120_4_2_2.md")
 
   tags = merge(local.cis_v120_4_1_common_tags, {
@@ -146,7 +146,7 @@ benchmark "cis_v120_4_3" {
 control "cis_v120_4_3_1" {
   title         = "4.3.1 Ensure File Storage Systems are encrypted with Customer Managed Keys (CMK)"
   description   = "Oracle Cloud Infrastructure File Storage service (FSS) provides a durable, scalable, secure, enterprise-grade network file system. By default, the Oracle service manages the keys that encrypt FSS file systems. FSS file systems can also be encrypted using a customer managed key."
-  query         = query.manual_control
+  query         = query.filestorage_filesystem_cmk_encryption_enabled
   documentation = file("./cis_v120/docs/cis_v120_4_3_1.md")
 
   tags = merge(local.cis_v120_4_3_common_tags, {

@@ -71,6 +71,44 @@ query "identity_authentication_password_policy_strong_min_length_14" {
   EOQ
 }
 
+query "identity_allow_group_administrators_manage_all_resources_in_tenancy" {
+  sql = <<-EOQ
+    select
+      id as resource,
+      case
+        when to_jsonb(lower(statements::text)::json) @> '"allow group administrators to manage all-resources in tenancy"' then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when to_jsonb(lower(statements::text)::json) @> '"allow group administrators to manage all-resources in tenancy"' then ' group administrators have full access to all resources in tenancy.'
+        else ' group administrators does not have full access to all resources in tenancy.'
+      end as reason
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_policy;
+  EOQ
+}
+
+query "identity_iam_administrators_cannot_update_tenancy_administrators_group" {
+  sql = <<-EOQ
+    select
+      id as resource,
+      case
+        when to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use users in tenancy where target.group.name != ''administrators''"' or to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use groups in tenancy where target.group.name != ''administrators''"' then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use users in tenancy where target.group.name != ''administrators''"' or to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use groups in tenancy where target.group.name != ''administrators''"' then ' administrators cannot update tenancy administrators group.'
+        else ' administrators can update tenancy administrators group.'
+      end as reason
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_policy;
+  EOQ
+}
+
 query "identity_default_tag" {
   sql = <<-EOQ
     with default_tag_count as (
