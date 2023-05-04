@@ -49,8 +49,8 @@ query "objectstorage_bucket_cmk_encryption_enabled" {
         else 'alarm'
       end as status,
       case
-        when kms_key_id is not null and kms_key_id <> '' then a.title || ' encrypted with a Customer Managed Key.'
-        else a.title || ' not encrypted with a Customer Managed Key.'
+        when kms_key_id is not null and kms_key_id <> '' then a.title || ' encrypted with CMK.'
+        else a.title || ' not encrypted with CMK.'
       end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "a.")}
@@ -70,8 +70,8 @@ query "blockstorage_boot_volume_cmk_encryption_enabled" {
         else 'alarm'
       end as status,
       case
-        when kms_key_id is not null and kms_key_id <> '' then v.title || ' encrypted with a Customer Managed Key.'
-        else v.title || ' not encrypted with a Customer Managed Key.'
+        when kms_key_id is not null and kms_key_id <> '' then v.title || ' encrypted with CMK.'
+        else v.title || ' not encrypted with CMK.'
       end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
@@ -91,8 +91,8 @@ query "blockstorage_block_volume_cmk_encryption_enabled" {
         else 'alarm'
       end as status,
       case
-        when kms_key_id is not null and kms_key_id <> '' then v.title || ' encrypted with a Customer Managed Key.'
-        else v.title || ' not encrypted with a Customer Managed Key.'
+        when kms_key_id is not null and kms_key_id <> '' then v.title || ' encrypted with CMK.'
+        else v.title || ' not encrypted with CMK.'
       end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "v.")}
@@ -112,8 +112,8 @@ query "filestorage_filesystem_cmk_encryption_enabled" {
         else 'alarm'
       end as status,
       case
-        when kms_key_id is not null and kms_key_id <> '' then f.title || ' encrypted with a Customer Managed Key.'
-        else f.title || ' not encrypted with a Customer Managed Key.'
+        when kms_key_id is not null and kms_key_id <> '' then f.title || ' encrypted with CMK.'
+        else f.title || ' not encrypted with CMK.'
       end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "f.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "f.")}
