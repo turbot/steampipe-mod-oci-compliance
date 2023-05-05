@@ -45,7 +45,7 @@ query "objectstorage_bucket_cmk_encryption_enabled" {
     select
       a.id as resource,
       case
-        when kms_key_id is not null and kms_key_id <> ''  then 'ok'
+        when kms_key_id is not null and kms_key_id <> '' then 'ok'
         else 'alarm'
       end as status,
       case
@@ -66,7 +66,7 @@ query "blockstorage_boot_volume_cmk_encryption_enabled" {
     select
       v.id as resource,
       case
-        when kms_key_id is not null and kms_key_id <> ''  then 'ok'
+        when kms_key_id is not null and kms_key_id <> '' then 'ok'
         else 'alarm'
       end as status,
       case
@@ -87,7 +87,7 @@ query "blockstorage_block_volume_cmk_encryption_enabled" {
     select
       v.id as resource,
       case
-        when kms_key_id is not null and kms_key_id <> ''  then 'ok'
+        when kms_key_id is not null and kms_key_id <> '' then 'ok'
         else 'alarm'
       end as status,
       case
@@ -108,7 +108,7 @@ query "filestorage_filesystem_cmk_encryption_enabled" {
     select
       f.id as resource,
       case
-        when kms_key_id is not null and kms_key_id <> ''  then 'ok'
+        when kms_key_id is not null and kms_key_id <> '' then 'ok'
         else 'alarm'
       end as status,
       case
