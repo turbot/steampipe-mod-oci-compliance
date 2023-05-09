@@ -71,41 +71,76 @@ query "identity_authentication_password_policy_strong_min_length_14" {
   EOQ
 }
 
-query "identity_allow_group_administrators_manage_all_resources_in_tenancy" {
+query "identity_only_administrators_group_with_manage_all_resources_permission_in_tenancy" {
   sql = <<-EOQ
+    with policies_with_manage_all_resource_per as (
+      select
+        lower(s) as statement
+      from
+        oci_identity_policy,
+        jsonb_array_elements_text(statements) as s
+      where
+        lower(s) like '%' || 'to manage all-resources in tenancy'
+    ), policies_with_manage_all_resource_per_except_admin as (
+        select
+          count(*) as num_of_statements
+        from
+          policies_with_manage_all_resource_per
+        where
+          not statement ilike '%' || 'administrators' || '%'
+    )
     select
-      id as resource,
+      tenant_id as resource,
       case
-        when to_jsonb(lower(statements::text)::json) @> '"allow group administrators to manage all-resources in tenancy"' then 'ok'
-        else 'alarm'
+        when num_of_statements > 0 then 'alarm'
+        else 'ok'
       end as status,
       case
-        when to_jsonb(lower(statements::text)::json) @> '"allow group administrators to manage all-resources in tenancy"' then 'group administrators have full access to all resources in tenancy.'
-        else 'group administrators does not have full access to all resources in tenancy.'
+        when num_of_statements > 0 then title || ' permissions on all resources are given to the groups other than administrator group.'
+        else title || ' permissions on all resources are given to the administrator group only.'
       end as reason
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_global_sql}
     from
-      oci_identity_policy;
+      oci_identity_tenancy,
+      policies_with_manage_all_resource_per_except_admin;
   EOQ
 }
 
-query "identity_iam_administrators_cannot_update_tenancy_administrators_group" {
+query "identity_iam_administrators_no_update_tenancy_administrators_group_permission" {
   sql = <<-EOQ
+    with policies_to_update_tenancy as (
+      select
+        lower(s) as statement
+      from
+        oci_identity_policy,
+        jsonb_array_elements_text(statements) as s
+      where
+        lower(s) like '%' || 'to use users in tenancy' || '%'
+        or lower(s) like '%' || 'to use groups in tenancy' || '%'
+    ), policies_to_update_tenancy_without_condition as (
+      select
+        count(*) as num
+      from
+        policies_to_update_tenancy
+      where
+        not statement like '%' || 'where target.group.name != ''administrators'''
+    )
     select
       id as resource,
       case
-        when to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use users in tenancy where target.group.name != ''administrators''"' or to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use groups in tenancy where target.group.name != ''administrators''"' then 'ok'
-        else 'alarm'
+        when num > 0 then 'alarm'
+        else 'ok'
       end as status,
       case
-        when to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use users in tenancy where target.group.name != ''administrators''"' or to_jsonb(lower(statements::text)::json) @> '"allow group iamadmins to use groups in tenancy where target.group.name != ''administrators''"' then 'administrators cannot update tenancy administrators group.'
-        else 'administrators can update tenancy administrators group.'
+        when num > 0 then title || ' IAM administrators can update tenancy administrators group.'
+        else title || ' IAM administrators cannot update tenancy administrators group.'
       end as reason
       ${local.tag_dimensions_sql}
       ${local.common_dimensions_global_sql}
     from
-      oci_identity_policy;
+      oci_identity_tenancy,
+      policies_to_update_tenancy_without_condition;
   EOQ
 }
 
