@@ -89,7 +89,7 @@ control "cis_v120_2_5" {
   tags = merge(local.cis_v120_2_common_tags, {
     cis_item_id = "2.5"
     cis_level   = "1"
-    cis_type    = "manual"
+    cis_type    = "automated"
     service     = "OCI/VCN"
   })
 }

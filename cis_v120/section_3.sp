@@ -24,7 +24,7 @@ benchmark "cis_v120_3" {
     control.cis_v120_3_14,
     control.cis_v120_3_15,
     control.cis_v120_3_16,
-    control.cis_v120_3_17,
+    control.cis_v120_3_17
   ]
 
   tags = merge(local.cis_v120_3_common_tags, {
