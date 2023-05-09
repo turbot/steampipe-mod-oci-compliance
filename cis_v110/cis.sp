@@ -14,7 +14,7 @@ benchmark "cis_v110" {
     benchmark.cis_v110_2,
     benchmark.cis_v110_3,
     benchmark.cis_v110_4,
-    benchmark.cis_v110_5,
+    benchmark.cis_v110_5
   ]
 
   tags = merge(local.cis_v110_common_tags, {

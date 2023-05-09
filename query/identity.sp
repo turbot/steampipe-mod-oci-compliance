@@ -299,3 +299,4 @@ query "identity_user_valid_email" {
       oci_identity_user as a;
   EOQ
 }
+
