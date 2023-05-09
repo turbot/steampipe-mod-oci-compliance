@@ -9,6 +9,8 @@ benchmark "cis_v110_1" {
   documentation = file("./cis_v110/docs/cis_v110_1.md")
   children = [
     control.cis_v110_1_1,
+    control.cis_v110_1_2,
+    control.cis_v110_1_3,
     control.cis_v110_1_4,
     control.cis_v110_1_7,
     control.cis_v110_1_8,
@@ -32,6 +34,34 @@ control "cis_v110_1_1" {
 
   tags = merge(local.cis_v110_1_common_tags, {
     cis_item_id = "1.1"
+    cis_level   = "1"
+    cis_type    = "manual"
+    service     = "OCI/Identity"
+  })
+}
+
+control "cis_v110_1_2" {
+  title         = "1.2 Ensure permissions on all resources are given only to the tenancy administrator group"
+  description   = "There is a built-in OCI IAM policy enabling the Administrators group to perform any action within a tenancy."
+  query         = query.identity_only_administrators_group_with_manage_all_resources_permission_in_tenancy
+  documentation = file("./cis_v110/docs/cis_v110_1_2.md")
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    cis_item_id = "1.2"
+    cis_level   = "1"
+    cis_type    = "manual"
+    service     = "OCI/Identity"
+  })
+}
+
+control "cis_v110_1_3" {
+  title         = "1.3 Ensure IAM administrators cannot update tenancy Administrators group"
+  description   = "Tenancy administrators can create more users, groups, and policies to provide other service administrators access to OCI resources."
+  query         = query.identity_iam_administrators_no_update_tenancy_administrators_group_permission
+  documentation = file("./cis_v110/docs/cis_v110_1_3.md")
+
+  tags = merge(local.cis_v110_1_common_tags, {
+    cis_item_id = "1.3"
     cis_level   = "1"
     cis_type    = "manual"
     service     = "OCI/Identity"
