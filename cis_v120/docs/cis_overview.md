@@ -11,6 +11,7 @@ The following configuration profiles are defined by this Benchmark:
 ### Level 1
 
 Items in this profile are intend to:
+
   -  be practical and prudent;
   -  provide security focused best practice hardening of a technology; and
   -  limit impact to the utility of the technology beyond acceptable means.
@@ -18,6 +19,7 @@ Items in this profile are intend to:
 ### Level 2
 
 This profile extends the "Level 1" profile. Items in this profile exhibit one or more of the following characteristics:
+
   - are intended for environments or use cases where security is more critical than manageability and usability
   - acts as defense in depth measure
   - may impact the utility or performance of the technology
