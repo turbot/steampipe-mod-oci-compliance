@@ -17,7 +17,7 @@ locals {
 }
 
 benchmark "cis_v120_4" {
-  title         = "4 Object Storage"
+  title         = "4 Storage"
   documentation = file("./cis_v120/docs/cis_v120_4.md")
   children = [
     benchmark.cis_v120_4_1,

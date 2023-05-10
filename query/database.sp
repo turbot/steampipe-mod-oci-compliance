@@ -1,4 +1,4 @@
-query "oracle_autonomous_shared_databases_publicly_accessible" {
+query "oracle_autonomous_shared_databases_not_publicly_accessible" {
   sql = <<-EOQ
     select
       d.id as resource,
@@ -7,8 +7,8 @@ query "oracle_autonomous_shared_databases_publicly_accessible" {
         else 'ok'
       end as status,
       case
-        when whitelisted_ips is null then d.title || ' not restricted to allowed sources.'
-        else d.title || ' restricted to allowed sources.'
+        when whitelisted_ips is null then d.title || ' is publicly accessible.'
+        else d.title || ' not publicly accessible.'
       end as reason
       ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}
       ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "d.")}

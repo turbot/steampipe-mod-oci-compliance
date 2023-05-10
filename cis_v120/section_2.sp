@@ -125,7 +125,7 @@ control "cis_v120_2_7" {
 control "cis_v120_2_8" {
   title         = "2.8 Ensure Oracle Autonomous Shared Databases (ADB) access is restricted to allowed sources or deployed within a Virtual Cloud Network"
   description   = "Oracle Autonomous Database Shared (ADB-S) automates database tuning, security, backups, updates, and other routine management tasks traditionally performed by DBAs. ADB-S provide ingress filtering of network traffic or can be deployed within an existing Virtual Cloud Network (VCN). It is recommended that all new ADB-S databases be deployed within a VCN and that the Access Control Rules are restricted to your corporate IP Addresses or VCNs for existing ADB-S databases."
-  query         = query.oracle_autonomous_shared_databases_publicly_accessible
+  query         = query.oracle_autonomous_shared_databases_not_publicly_accessible
   documentation = file("./cis_v120/docs/cis_v120_2_8.md")
 
   tags = merge(local.cis_v120_2_common_tags, {

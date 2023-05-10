@@ -2,7 +2,7 @@
 
 30+ checks covering industry defined security best practices across all Oracle Cloud regions.
 
-**Includes full support for v1.1.0 CIS benchmarks**.
+**Includes full support for v1.1.0 and v1.2.0 CIS benchmarks**.
 
 Run checks in a dashboard:
 
@@ -13,6 +13,7 @@ Or in a terminal:
 
 Includes support for:
 * [Oracle Cloud CIS v1.1.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v110)
+* [Oracle Cloud CIS v1.2.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v120)
 
 ## Getting started
 
