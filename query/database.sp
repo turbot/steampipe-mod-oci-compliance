@@ -1,4 +1,4 @@
-query "oracle_autonomous_shared_databases_not_publicly_accessible" {
+query "oracle_autonomous_database_not_publicly_accessible" {
   sql = <<-EOQ
     select
       d.id as resource,
