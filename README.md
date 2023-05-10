@@ -13,7 +13,7 @@ Or in a terminal:
 
 Includes support for:
 * [Oracle Cloud CIS v1.1.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v110)
-* [Oracle Cloud CIS v1.2.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v120)
+* [Oracle Cloud CIS v1.2.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v120) 🚀 New!
 
 ## Getting started
 
