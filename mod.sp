@@ -86,7 +86,7 @@ mod "oci_compliance" {
 
   require {
     plugin "oci" {
-      version = "0.23.0"
+      min_version = "0.23.0"
     }
   }
 }
