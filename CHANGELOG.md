@@ -1,3 +1,13 @@
+## v0.10 [2023-11-03]
+
+_Breaking changes_
+
+- Updated the plugin dependency section of the mod to use `min_version` instead of `version`. ([#75](https://github.com/turbot/steampipe-mod-oci-compliance/pull/75))
+
+_Bug fixes_
+
+- Fixed dashboard localhost URLs in README and index doc. ([#70](https://github.com/turbot/steampipe-mod-oci-compliance/pull/70))
+
 ## v0.9 [2023-05-10]
 
 _What's new?_
