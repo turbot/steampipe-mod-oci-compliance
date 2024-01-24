@@ -271,9 +271,9 @@ query "core_instance_encryption_in_transit_enabled" {
         when (launch_options -> 'isPvEncryptionInTransitEnabled')::bool then i.title || ' encryption in transit enabled.'
         else i.title || ' encryption in transit disabled.'
       end as reason
-      --${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
-      --${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
-      --${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
     from
       oci_core_instance as i
       left join oci_identity_compartment as c on c.id = i.compartment_id;

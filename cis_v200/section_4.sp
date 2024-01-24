@@ -165,7 +165,7 @@ control "cis_v200_4_10" {
   documentation = file("./cis_v200/docs/cis_v200_4_10.md")
 
   tags = merge(local.cis_v200_4_common_tags, {
-    cis_item_id = "3.11"
+    cis_item_id = "4.10"
     cis_level   = "1"
     cis_type    = "automated"
     service     = "OCI/ONS"
