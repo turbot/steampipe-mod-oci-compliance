@@ -14,7 +14,6 @@ locals {
   cis_v200_5_3_common_tags = merge(local.cis_v200_5_common_tags, {
     cis_section_id = "5.3"
   })
-
 }
 
 benchmark "cis_v200_5" {
@@ -22,7 +21,8 @@ benchmark "cis_v200_5" {
   documentation = file("./cis_v200/docs/cis_v200_5.md")
   children = [
     benchmark.cis_v200_5_1,
-    benchmark.cis_v200_5_2
+    benchmark.cis_v200_5_2,
+    benchmark.cis_v200_5_3
   ]
 
   tags = merge(local.cis_v200_5_common_tags, {
@@ -96,7 +96,7 @@ benchmark "cis_v200_5_2" {
   ]
 
   tags = merge(local.cis_v200_5_2_common_tags, {
-    service = "OCI/BlockVolumes"
+    service = "OCI/BlockVolume"
     type    = "Benchmark"
   })
 }
@@ -111,7 +111,7 @@ control "cis_v200_5_2_1" {
     cis_item_id = "5.2.1"
     cis_level   = "2"
     cis_type    = "automated"
-    service     = "OCI/ObjectStorage"
+    service     = "OCI/BlockVolume"
   })
 }
 
@@ -125,7 +125,7 @@ control "cis_v200_5_2_2" {
     cis_item_id = "5.2.2"
     cis_level   = "2"
     cis_type    = "automated"
-    service     = "OCI/ObjectStorage"
+    service     = "OCI/BlockVolume"
   })
 }
 
@@ -133,7 +133,7 @@ benchmark "cis_v200_5_3" {
   title         = "5.3 File Storage Service"
   documentation = file("./cis_v200/docs/cis_v200_5_3.md")
   children = [
-    control.cis_v200_5_3_1,
+    control.cis_v200_5_3_1
   ]
 
   tags = merge(local.cis_v200_5_3_common_tags, {
@@ -152,6 +152,6 @@ control "cis_v200_5_3_1" {
     cis_item_id = "5.3.1"
     cis_level   = "2"
     cis_type    = "automated"
-    service     = "OCI/ObjectStorage"
+    service     = "OCI/FileStorageService"
   })
 }

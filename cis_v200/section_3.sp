@@ -21,7 +21,7 @@ benchmark "cis_v200_3" {
 control "cis_v200_3_1" {
   title         = "3.1 Ensure Compute Instance Legacy Metadata service endpoint is disabled"
   description   = "Ensuring audit logs are kept for 365 days."
-  query         = query.identity_tenancy_audit_log_retention_period_365_days
+  query         = query.core_instance_legacy_metadata_service_endpoint_disabled
   documentation = file("./cis_v200/docs/cis_v200_3_1.md")
 
   tags = merge(local.cis_v200_3_common_tags, {
@@ -49,7 +49,7 @@ control "cis_v200_3_2" {
 control "cis_v200_3_3" {
   title         = "3.3 Ensure In-transit Encryption is enabled on Compute Instance"
   description   = "The Block Volume service provides the option to enable in-transit encryption for paravirtualized volume attachments on virtual machine (VM) instances."
-  query         = query.notification_topic_with_subscription
+  query         = query.core_instance_encryption_in_transit_enabled
   documentation = file("./cis_v200/docs/cis_v200_3_3.md")
 
   tags = merge(local.cis_v200_3_common_tags, {

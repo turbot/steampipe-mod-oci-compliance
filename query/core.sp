@@ -237,3 +237,45 @@ query "core_subnet_flow_log_enabled" {
       left join oci_identity_compartment as c on c.id = s.compartment_id;
   EOQ
 }
+
+query "core_instance_legacy_metadata_service_endpoint_disabled" {
+  sql = <<-EOQ
+    select
+      i.id as resource,
+      case
+        when (instance_options -> 'areLegacyImdsEndpointsDisabled')::bool then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when (instance_options -> 'areLegacyImdsEndpointsDisabled')::bool then i.title || ' legacy metadata service endpoint disabled.'
+        else i.title || '  legacy metadata service endpoint enabled.'
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
+    from
+      oci_core_instance as i
+      left join oci_identity_compartment as c on c.id = i.compartment_id;
+  EOQ
+}
+
+query "core_instance_encryption_in_transit_enabled" {
+  sql = <<-EOQ
+    select
+      i.id as resource,
+      case
+        when (launch_options -> 'isPvEncryptionInTransitEnabled')::bool then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when (launch_options -> 'isPvEncryptionInTransitEnabled')::bool then i.title || ' encryption in transit enabled.'
+        else i.title || ' encryption in transit disabled.'
+      end as reason
+      --${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      --${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      --${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
+    from
+      oci_core_instance as i
+      left join oci_identity_compartment as c on c.id = i.compartment_id;
+  EOQ
+}

@@ -9,7 +9,7 @@ benchmark "cis_v200_6" {
   documentation = file("./cis_v200/docs/cis_v200_6.md")
   children = [
     control.cis_v200_6_1,
-    control.cis_v200_6_2,
+    control.cis_v200_6_2
   ]
 
   tags = merge(local.cis_v200_6_common_tags, {

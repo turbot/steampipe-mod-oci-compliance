@@ -173,7 +173,7 @@ control "cis_v200_4_10" {
 }
 
 control "cis_v200_4_11" {
-  title         = "4.11 Ensure a notification is configured for network security group"
+  title         = "4.11 Ensure a notification is configured for network security group changes"
   description   = "It is recommended to setup an Event Rule and Notification that gets triggered when network security groups are created, updated or deleted. Event Rules are compartment scoped and will detect events in child compartments, it is recommended to create the Event rule at the root compartment level."
   query         = query.events_rule_notification_network_security_list_changes
   documentation = file("./cis_v200/docs/cis_v200_4_11.md")
@@ -231,14 +231,14 @@ control "cis_v200_4_14" {
 control "cis_v200_4_15" {
   title         = "4.15 Ensure a notification is configured for Oracle Cloud Guard problems detected"
   description   = "Cloud Guard detects misconfigured resources and insecure activity within a tenancy and provides security administrators with the visibility to resolve these issues. Upon detection, Cloud Guard generates a Problem. It is recommended to setup an Event Rule and Notification that gets triggered when Oracle Cloud Guard Problems are created, dismissed or remediated. Event Rules are compartment scoped and will detect events in child compartments. It is recommended to create the Event rule at the root compartment level."
-  query         = query.cloudguard_enabled
+  query         = query.events_rule_notification_cloud_guard_problems_detected
   documentation = file("./cis_v200/docs/cis_v200_4_15.md")
 
   tags = merge(local.cis_v200_4_common_tags, {
     cis_item_id = "4.15"
     cis_level   = "1"
     cis_type    = "automated"
-    service     = "OCI/CloudGuard"
+    service     = "OCI/ONS"
   })
 }
 
