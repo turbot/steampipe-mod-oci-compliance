@@ -174,7 +174,7 @@ control "cis_v200_1_10" {
 control "cis_v200_1_11" {
   title         = "1.11 Ensure user IAM Database Passwords rotate within 90 days"
   description   = "Users can create and manage their database password in their IAM user profile and use that password to authenticate to databases in their tenancy. An IAM database password is a different password than an OCI Console password. Setting an IAM database password allows an authorized IAM user to sign in to one or more Autonomous Databases in their tenancy."
-  query         = query.identity_administrator_user_with_no_api_key
+  query         = query.identity_user_db_credential_age_90
   documentation = file("./cis_v200/docs/cis_v200_1_11.md")
 
   tags = merge(local.cis_v200_1_common_tags, {
