@@ -1,5 +1,9 @@
 ## v0.11 [2024-02-02]
 
+_Dependencies_
+
+- OCI plugin `v0.35.0` or higher is now required. ([#83](https://github.com/turbot/steampipe-mod-oci-compliance/pull/83))
+
 _What's new?_
 
 - Added CIS v2.0.0 benchmark (`steampipe check benchmark.cis_v200`). ([#80](https://github.com/turbot/steampipe-mod-oci-compliance/pull/80))
