@@ -1,7 +1,7 @@
 locals {
   cis_v200_common_tags = merge(local.oci_compliance_common_tags, {
     cis         = "true"
-    cis_version = "v2.2.0"
+    cis_version = "v2.0.0"
   })
 }
 
