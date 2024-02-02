@@ -1,3 +1,10 @@
+## v0.11 [2024-02-02]
+
+_What's new?_
+
+- Added CIS v2.0.0 benchmark (`steampipe check benchmark.cis_v200`). ([#80](https://github.com/turbot/steampipe-mod-oci-compliance/pull/80))
+
+
 ## v0.10 [2023-11-03]
 
 _Breaking changes_
