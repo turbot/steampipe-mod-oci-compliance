@@ -409,3 +409,39 @@ query "events_rule_notification_vcn_changes" {
       jsonb_array_elements(actions) as a;
   EOQ
 }
+
+query "events_rule_notification_cloud_guard_problems_detected" {
+  sql = <<-EOQ
+    select
+      distinct t.id as resource,
+      case
+        when c.name is not null then 'skip'
+        when condition -> 'eventType' ?& array
+          ['com.oraclecloud.cloudguard.problemdetected',
+          'com.oraclecloud.cloudguard.problemdismissed',
+          'com.oraclecloud.cloudguard.problemremediated']
+          and a ->> 'actionType' = 'ONS'
+          and t.lifecycle_state = 'ACTIVE'
+          and t.is_enabled then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when c.name is not null then c.name || ' not a root compartment.'
+        when condition -> 'eventType' ?& array
+          ['com.oraclecloud.cloudguard.problemdetected',
+          'com.oraclecloud.cloudguard.problemdismissed',
+          'com.oraclecloud.cloudguard.problemremediated']
+          and a ->> 'actionType' = 'ONS'
+          and t.lifecycle_state = 'ACTIVE'
+          and t.is_enabled then t.title || ' configured for cloud guard problems detected.'
+        else t.title || ' not configured for cloud guard problems detected.'
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "t.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
+    from
+      oci_events_rule t
+      left join oci_identity_compartment as c on c.id = t.compartment_id,
+      jsonb_array_elements(actions) as a;
+  EOQ
+}
