@@ -300,3 +300,18 @@ query "identity_user_valid_email" {
   EOQ
 }
 
+query "identity_user_db_credential_age_90" {
+  sql = <<-EOQ
+    select
+      id as resource,
+      case
+        when time_created <= (current_date - interval '90' day) then 'alarm'
+        else 'ok'
+      end as status,
+      title || ' API key' || ' created ' || to_char(time_created , 'DD-Mon-YYYY') || ' (' || extract(day from current_timestamp - time_created) || ' days).'
+      as reason
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_db_credential;
+  EOQ
+}
