@@ -1,5 +1,5 @@
 mod "oci_compliance" {
-  # hub metadata
+  # Hub metadata
   title         = "Oracle Cloud Infrastructure Compliance"
   description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for CIS across all of your Oracle Cloud Infrastructure accounts using Powerpipe and Steampipe."
   color         = "#F80000"

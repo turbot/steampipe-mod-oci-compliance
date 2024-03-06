@@ -28,7 +28,7 @@ brew install turbot/tap/steampipe
 steampipe plugin install oci
 ```
 
-Steampipe will automatically use your default OCI credentials. Optionally, you can [setup multiple accounts](https://hub.steampipe.io/plugins/turbot/oci#multi-account-connections) or [customize OCI credentials](https://hub.steampipe.io/plugins/turbot/oci#configuring-oci-credentials).
+Steampipe will automatically use your default OCI credentials. Optionally, you can [setup multiple tenant](https://hub.steampipe.io/plugins/turbot/oci#multi-tenant-connections).
 
 Finally, install the mod:
 
@@ -36,7 +36,7 @@ Finally, install the mod:
 mkdir dashboards
 cd dashboards
 powerpipe mod init
-powerpipe mod install github.com/turbot/powerpipe-mod-oci-compliance
+powerpipe mod install github.com/turbot/steampipe-mod-oci-compliance
 ```
 
 ### Browsing Dashboards
@@ -82,8 +82,8 @@ The benchmark queries use common properties (like `compartment`, `compartment_id
 It's easiest to setup your vars file, starting with the sample:
 
 ```sh
-cp powerpipe.ppvar.example powerpipe.ppvars
-vi powerpipe.ppvars
+cp steampipe.spvars.example steampipe.spvars
+vi steampipe.spvars
 ```
 
 Alternatively you can pass variables on the command line:
