@@ -7,20 +7,6 @@
 
 30+ checks covering industry defined security best practices across all Oracle Cloud regions.
 
-**Includes full support for v1.1.0 and v1.2.0 CIS benchmarks**.
-
-Run checks in a dashboard:
-
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci_compliance_dashboard.png)
-
-Or in a terminal:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci_cis_v200_terminal.png)
-
-Includes support for:
-* [Oracle Cloud CIS v1.1.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v200)
-* [Oracle Cloud CIS v1.2.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v120) 🚀 New!
-* [Oracle Cloud CIS v2.0.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v200) 🚀 New!
-
 ## Documentation
 
 - **[Benchmarks and controls →](https://hub.powerpipe.io/mods/turbot/oci_compliance/controls)**
