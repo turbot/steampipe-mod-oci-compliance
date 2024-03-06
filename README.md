@@ -11,10 +11,10 @@
 
 Run checks in a dashboard:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/add-new-checks/docs/oci_compliance_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci_compliance_dashboard.png)
 
 Or in a terminal:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/add-new-checks/docs/oci_cis_v200_terminal.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-oci-compliance/main/docs/oci_cis_v200_terminal.png)
 
 Includes support for:
 * [Oracle Cloud CIS v1.1.0](https://hub.steampipe.io/mods/turbot/oci_compliance/controls/benchmark.cis_v200)
