@@ -6,7 +6,7 @@ locals {
 }
 
 benchmark "cis_v120" {
-  title         = "CIS v1.2.0"
+  title         = "OCI CIS v1.2.0"
   description   = "The CIS Oracle Cloud Infrastructure Foundations Benchmark, provides prescriptive guidance for establishing a secure baseline configuration for the Oracle Cloud Infrastructure environment."
   documentation = file("./cis_v120/docs/cis_overview.md")
   children = [
