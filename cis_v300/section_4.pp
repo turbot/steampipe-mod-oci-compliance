@@ -260,7 +260,7 @@ control "cis_v300_4_16" {
 control "cis_v300_4_17" {
   title         = "4.17 Ensure write level Object Storage logging is enabled for all buckets"
   description   = "Object Storage write logs will log all write requests made to objects in a bucket."
-  query         = query.manual_control
+  query         = query.objectstorage_bucket_write_logging_enabled
   documentation = file("./cis_v300/docs/cis_v300_4_17.md")
 
   tags = merge(local.cis_v300_4_common_tags, {

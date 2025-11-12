@@ -35,7 +35,7 @@ control "cis_v300_6_1" {
 control "cis_v300_6_2" {
   title         = "6.2 Ensure no resources are created in the root compartment"
   description   = "When you create a cloud resource such as an instance, block volume, or cloud network, you must specify to which compartment you want the resource to belong. Placing resources in the root compartment makes it difficult to organize and isolate those resources."
-  query         = query.manual_control
+  query         = query.identity_root_compartment_no_resources
   documentation = file("./cis_v300/docs/cis_v300_6_2.md")
 
   tags = merge(local.cis_v300_6_common_tags, {

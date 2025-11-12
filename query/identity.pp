@@ -227,6 +227,164 @@ query "identity_tenancy_with_one_active_compartment" {
   EOQ
 }
 
+query "identity_root_compartment_no_resources" {
+  sql = <<-EOQ
+    with tenancy as (
+      select
+        id,
+        tenant_id,
+        tenant_name,
+        _ctx
+      from
+        oci_identity_tenancy
+    ), root_resource_counts as (
+      select
+        t.id as root_compartment_id,
+        'VCN' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_vcn v on v.compartment_id = t.id
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Instance' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_instance i on i.compartment_id = t.id
+      where
+        coalesce(i.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Boot Volume' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_boot_volume b on b.compartment_id = t.id
+      where
+        coalesce(b.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Block Volume' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_volume vol on vol.compartment_id = t.id
+      where
+        coalesce(vol.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Volume Group' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_volume_group vg on vg.compartment_id = t.id
+      where
+        coalesce(vg.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'File System' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_file_storage_file_system fs on fs.compartment_id = t.id
+      where
+        coalesce(fs.lifecycle_state, '') not in ('DELETED', 'DELETING')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Object Storage Bucket' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_objectstorage_bucket bucket on bucket.compartment_id = t.id
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Autonomous Database' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_database_autonomous_database adb on adb.compartment_id = t.id
+      where
+        coalesce(adb.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'DB System' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_database_db_system dbs on dbs.compartment_id = t.id
+      where
+        coalesce(dbs.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+      union all
+      select
+        t.id as root_compartment_id,
+        'Load Balancer' as resource_type,
+        count(*) as resource_count
+      from
+        tenancy t
+        join oci_core_load_balancer lb on lb.compartment_id = t.id
+      where
+        coalesce(lb.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING', 'DELETED')
+      group by
+        t.id
+    ), summary as (
+      select
+        root_compartment_id,
+        sum(resource_count) as total_resources,
+        string_agg(format('%s=%s', resource_type, resource_count), ', ' order by resource_type) as resource_breakdown
+      from
+        root_resource_counts
+      group by
+        root_compartment_id
+    )
+    select
+      t.id as resource,
+      case
+        when coalesce(s.total_resources, 0) > 0 then 'alarm'
+        else 'ok'
+      end as status,
+      case
+        when coalesce(s.total_resources, 0) > 0
+          then format(
+            'Root compartment contains %s resource(s): %s.',
+            s.total_resources,
+            coalesce(s.resource_breakdown, 'unknown')
+          )
+        else 'No resources created in root compartment.'
+      end as reason
+      ${replace(local.common_dimensions_qualifier_global_sql, "__QUALIFIER__", "t.")}
+    from
+      tenancy t
+      left join summary s on s.root_compartment_id = t.id;
+  EOQ
+}
+
 query "identity_user_api_key_age_90" {
   sql = <<-EOQ
     select
