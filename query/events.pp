@@ -445,3 +445,53 @@ query "events_rule_notification_cloud_guard_problems_detected" {
       jsonb_array_elements(actions) as a;
   EOQ
 }
+
+query "events_rule_notification_local_user_auth" {
+  sql = <<-EOQ
+    with candidate_rules as (
+      select distinct
+        r.tenant_id,
+        r.id,
+        r.display_name
+      from
+        oci_events_rule r
+        cross join lateral jsonb_array_elements(
+          coalesce(r.actions::jsonb, '[]'::jsonb)
+        ) as action
+      where
+        r.compartment_id = r.tenant_id
+        and r.lifecycle_state = 'ACTIVE'
+        and coalesce(r.is_enabled, false)
+        and (r.condition::text ilike '%com.oraclecloud.identitycontrolplane.signin.login%'
+            or r.condition::text ilike '%Identity SignOn%')
+        and r.condition::text ilike '%LOCAL%'
+        and action->>'actionType' in ('ONS', 'NOTIFICATIONS')
+        and coalesce((action->>'isEnabled')::boolean, false)
+        and coalesce(action->>'topicId', '') <> ''
+    )
+    select
+      t.id as resource,
+      case
+        when exists (
+          select 1
+          from candidate_rules cr
+          where cr.tenant_id = t.id
+        )
+          then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when exists (
+          select 1
+          from candidate_rules cr
+          where cr.tenant_id = t.id
+        )
+          then name || ' root compartment has an enabled events rule that notifies on local interactive logins.'
+        else name || ' root compartment does not have an events rule that notifies on local interactive logins.'
+      end as reason
+      ${local.tag_dimensions_sql}
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_tenancy t;
+  EOQ
+}

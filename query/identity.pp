@@ -315,3 +315,83 @@ query "identity_user_db_credential_age_90" {
       oci_identity_db_credential;
   EOQ
 }
+
+query "identity_user_credentials_unused_45_days" {
+  sql = <<-EOQ
+    select
+      u.id as resource,
+      case
+        when u.user_type <> 'IAM' then 'skip'
+        when coalesce(u.can_use_console_password, false)
+            or coalesce(u.can_use_api_keys, false)
+            or coalesce(u.can_use_auth_tokens, false)
+            or coalesce(u.can_use_smtp_credentials, false)
+            or coalesce(u.can_use_customer_secret_keys, false)
+            or coalesce(u.can_use_o_auth2_client_credentials, false)
+          then case
+            when u.last_successful_login_time is null
+              then 'alarm'
+            when u.last_successful_login_time <= (current_timestamp - interval '45 day')
+              then 'alarm'
+            else 'ok'
+          end
+        else 'ok'
+      end as status,
+      case
+        when u.user_type <> 'IAM' then name || ' is a federated user.'
+        when not (
+            coalesce(u.can_use_console_password, false)
+          or coalesce(u.can_use_api_keys, false)
+          or coalesce(u.can_use_auth_tokens, false)
+          or coalesce(u.can_use_smtp_credentials, false)
+          or coalesce(u.can_use_customer_secret_keys, false)
+          or coalesce(u.can_use_o_auth2_client_credentials, false)
+        ) then name || ' user all console/API credentials already disabled.'
+        when u.last_successful_login_time is null
+          then name || ' credentials enabled but has never logged in.'
+        when u.last_successful_login_time <= (current_timestamp - interval '45 day')
+          then name || ' credentials enabled and last successful login over 45 days ago.'
+        else name || ' credentials enabled and last successful login within 45 days.'
+      end as reason
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_user u
+    where
+      u.lifecycle_state = 'ACTIVE';
+  EOQ
+}
+
+query "identity_user_one_active_api_key" {
+  sql = <<-EOQ
+    with active_keys as (
+      select
+        user_id,
+        count(*) as active_api_key_count
+      from
+        oci_identity_api_key
+      where
+        lifecycle_state = 'ACTIVE'
+      group by
+        user_id
+    )
+    select
+      u.id as resource,
+      case
+        when u.user_type <> 'IAM' then 'skip'
+        when coalesce(k.active_api_key_count, 0) > 1 then 'alarm'
+        else 'ok'
+      end as status,
+      case
+        when u.user_type <> 'IAM' then u.name || ' has no active API keys.'
+        when coalesce(k.active_api_key_count, 0) = 0 then u.name || ' has one active API key.'
+        when coalesce(k.active_api_key_count, 0) = 1 then name || ' has one active API key.'
+        else format('%s has %s active API keys.', u.name, coalesce(k.active_api_key_count, 0))
+      end as reason
+      ${local.common_dimensions_global_sql}
+    from
+      oci_identity_user u
+      left join active_keys k on k.user_id = u.id
+    where
+      u.lifecycle_state = 'ACTIVE';
+  EOQ
+}
