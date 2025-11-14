@@ -540,8 +540,8 @@ query "identity_user_one_active_api_key" {
         else 'ok'
       end as status,
       case
-        when u.user_type <> 'IAM' then u.name || ' has no active API keys.'
-        when coalesce(k.active_api_key_count, 0) = 0 then u.name || ' has one active API key.'
+        when u.user_type <> 'IAM' then u.name || ' is a federated user.'
+        when coalesce(k.active_api_key_count, 0) = 0 then u.name || ' has no active API keys.'
         when coalesce(k.active_api_key_count, 0) = 1 then name || ' has one active API key.'
         else format('%s has %s active API keys.', u.name, coalesce(k.active_api_key_count, 0))
       end as reason
