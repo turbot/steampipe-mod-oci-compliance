@@ -279,3 +279,34 @@ query "core_instance_encryption_in_transit_enabled" {
       left join oci_identity_compartment as c on c.id = i.compartment_id;
   EOQ
 }
+
+query "core_instance_secure_boot_enabled" {
+  sql = <<-EOQ
+    select
+      i.id as resource,
+      case
+        when coalesce(
+          (launch_options -> 'isSecureBootEnabled')::bool,
+          (launch_options -> 'shieldedInstanceOptions' -> 'isSecureBootEnabled')::bool,
+          false
+        ) then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when coalesce(
+          (launch_options -> 'isSecureBootEnabled')::bool,
+          (launch_options -> 'shieldedInstanceOptions' -> 'isSecureBootEnabled')::bool,
+          false
+        ) then i.title || ' secure boot enabled.'
+        else i.title || ' secure boot disabled.'
+      end as reason
+      ${replace(local.tag_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_sql, "__QUALIFIER__", "i.")}
+      ${replace(local.common_dimensions_qualifier_compartment_sql, "__QUALIFIER__", "c.")}
+    from
+      oci_core_instance as i
+      left join oci_identity_compartment as c on c.id = i.compartment_id
+    where
+      coalesce(i.lifecycle_state, '') not in ('TERMINATED', 'TERMINATING');
+  EOQ
+}
