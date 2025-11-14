@@ -1,3 +1,13 @@
+## v1.1.0 [2025-11-14]
+
+_What's new?_
+
+- Added OCI CIS v3.0.0 benchmark (`powerpipe benchmark run oci_compliance.benchmark.cis_v300`). ([#98](https://github.com/turbot/steampipe-mod-oci-compliance/pull/98))
+
+_Enhancements_
+
+- Updated all top-level benchmark titles to include `OCI` for clearer cloud provider identification. ([#96](https://github.com/turbot/steampipe-mod-oci-compliance/pull/96))
+
 ## v1.0.1 [2024-10-24]
 
 _Bug fixes_
